@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.example.learnenglishta.Common.Common;
 import com.example.learnenglishta.Model.Tutor;
-import com.example.learnenglishta.SQliteDatabase.BaseResipistory;
 import com.firebase.client.Firebase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -67,7 +66,6 @@ public class LoginActivity2 extends BaseActivity implements SinchService.StartFa
 //            if (!userRemember.isEmpty() && !passRemember.isEmpty())
 //                loginRemember(userRemember, passRemember);
 //        }
-        readFromAssets();
     }
 
     private void loginRemember(final String userRemember, final String passRemember) {
@@ -226,30 +224,6 @@ public class LoginActivity2 extends BaseActivity implements SinchService.StartFa
             }
         }
     }
-    private void readFromAssets() {
-        BaseResipistory myDbHelper = new BaseResipistory(LoginActivity2.this);
-        try {
-            myDbHelper.createDataBase();
-        } catch (IOException ioe) {
-            throw new Error("Unable to create database");
-        }
-        myDbHelper.openDataBase();
-        //     Toast.makeText(LoginActivity.this, "Successfully Imported", Toast.LENGTH_SHORT).show();
-        c = myDbHelper.query("OrderDetail", null, null, null, null, null, null);
-        if (c.moveToFirst()) {
-            do {
-//                Toast.makeText(LoginActivity.this,
-//                        "ID"+c.getInt(0)+"\n"+
-//                                "ItemId: " + c.getString(1) + "\n" +
-//                                "ItemName: " + c.getString(2) + "\n" +
-//                                "Quantity: " + c.getString(3) + "\n" +
-//                                "Price:  " + c.getString(4)+"\n"+
-//                                "Discount: "+c.getString(5),
-//                        Toast.LENGTH_LONG).show();
-            } while (c.moveToNext());
-        }
-    }
-
 
 
 

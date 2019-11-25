@@ -6,6 +6,15 @@ public class Course {
     private String discount;
     private String price;
 
+    public String getIsBuy() {
+        return isBuy;
+    }
+
+    public void setIsBuy(String isBuy) {
+        this.isBuy = isBuy;
+    }
+
+    private String isBuy;
     public String getSchedule() {
         return schedule;
     }
