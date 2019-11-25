@@ -1,6 +1,7 @@
 package com.example.learnenglishta;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.learnenglishta.Common.Common;
+import com.example.learnenglishta.Model.Doc;
 import com.example.learnenglishta.Model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,9 +23,10 @@ import java.util.ArrayList;
 public class StudentDetailActivity extends BaseActivity {
     private DatabaseReference userRef;
     private FirebaseDatabase database;
-    private TextView txtUsername,txtTitle,txtCountry,txtEmail,txtExp;
+    private TextView txtUsername,txtTitle,txtCountry,txtEmail,txtExp,txtCourseDoc;
     private String studentId;
     private String userId;
+    private String courseId;
     private Button btnChat;
     private Button btnCall;
     private ArrayList<String> listChatID;
@@ -37,6 +40,7 @@ public class StudentDetailActivity extends BaseActivity {
         txtEmail=(TextView)findViewById(R.id.txtEmailTutor);
         txtTitle=(TextView)findViewById(R.id.txtTitleTutorDetail);
         txtCountry=(TextView)findViewById(R.id.txtCountryTutor);
+        txtCourseDoc=(TextView)findViewById(R.id.txtCourseDocDetail);
         btnChat=(Button)findViewById(R.id.btnMessage);
         btnCall=(Button)findViewById(R.id.btnCallTutor);
         if (getIntent() != null)
@@ -45,7 +49,9 @@ public class StudentDetailActivity extends BaseActivity {
             if (Common.isConnectedToInternet(this)) {
                 studentId =listChatID.get(0);
                 userId=listChatID.get(1);
+                courseId=listChatID.get(2);
                 getDetailTutor(studentId);
+                getCourseDoc(courseId);
             } else {
                 Toast.makeText(StudentDetailActivity.this, "Check your connection", Toast.LENGTH_SHORT).show();
                 return;
@@ -53,6 +59,35 @@ public class StudentDetailActivity extends BaseActivity {
         }
         onClickChat();
         onClickCall();
+    }
+    private void getCourseDoc(String courseId){
+        DatabaseReference docRef=FirebaseDatabase.getInstance().getReference("Doc");
+        docRef.orderByChild("courseId").equalTo(courseId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot childSnap:dataSnapshot.getChildren()) {
+                    Doc doc = childSnap.getValue(Doc.class);
+                    txtCourseDoc.setText(doc.getDocName());
+                    openCourseDoc(doc);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void openCourseDoc(Doc doc) {
+        txtCourseDoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse(doc.getDocUrl());
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
     }
 
     private void onClickCall() {
