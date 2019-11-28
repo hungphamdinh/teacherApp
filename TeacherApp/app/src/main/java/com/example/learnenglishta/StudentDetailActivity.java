@@ -11,11 +11,13 @@ import android.widget.Toast;
 import com.example.learnenglishta.Common.Common;
 import com.example.learnenglishta.Model.Doc;
 import com.example.learnenglishta.Model.User;
+import com.example.learnenglishta.Notification.Token;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.sinch.android.rtc.calling.Call;
 
 import java.util.ArrayList;
@@ -52,6 +54,7 @@ public class StudentDetailActivity extends BaseActivity {
                 courseId=listChatID.get(2);
                 getDetailTutor(studentId);
                 getCourseDoc(courseId);
+                updateToken(FirebaseInstanceId.getInstance().getToken());
             } else {
                 Toast.makeText(StudentDetailActivity.this, "Check your connection", Toast.LENGTH_SHORT).show();
                 return;
@@ -59,6 +62,11 @@ public class StudentDetailActivity extends BaseActivity {
         }
         onClickChat();
         onClickCall();
+    }
+    private void updateToken(String token){
+        DatabaseReference tokenRef=FirebaseDatabase.getInstance().getReference("Tokens");
+        Token newToken=new Token(token);
+        tokenRef.child(userId).setValue(newToken);
     }
     private void getCourseDoc(String courseId){
         DatabaseReference docRef=FirebaseDatabase.getInstance().getReference("Doc");

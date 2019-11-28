@@ -15,8 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.learnenglishta.Adapter.MessageAdapter;
 import com.example.learnenglishta.Common.Common;
 import com.example.learnenglishta.Model.Chat;
+import com.example.learnenglishta.Model.Tutor;
 import com.example.learnenglishta.Model.User;
 
+import com.example.learnenglishta.Notification.Client;
+import com.example.learnenglishta.Notification.Data;
+import com.example.learnenglishta.Notification.MyRespone;
+import com.example.learnenglishta.Notification.Sender;
+import com.example.learnenglishta.Notification.Token;
+import com.example.learnenglishta.Service.APIService;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +35,10 @@ import com.scaledrone.lib.Scaledrone;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainChatActivity extends AppCompatActivity {
     private EditText editText;
     private TextView txtName;
@@ -37,11 +48,13 @@ public class MainChatActivity extends AppCompatActivity {
     private RecyclerView messagesView;
     private FirebaseDatabase database;
     //private FirebaseUser fuser;
-    private String tutorId;
+    private String studentId;
     private String userId;
     private ImageButton btnSubmit;
     private ArrayList<Chat>chats;
     private ArrayList<String> listChatID;
+    private APIService apiService;
+    private boolean notify=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,13 +69,15 @@ public class MainChatActivity extends AppCompatActivity {
         //linearLayoutManager.setStackFromEnd(true);
         messagesView.setHasFixedSize(true);
         messagesView.setLayoutManager(linearLayoutManager);
+        apiService= Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+
         if (getIntent() != null)
             listChatID = getIntent().getStringArrayListExtra("ChatID");
         if (!listChatID.isEmpty() && listChatID != null) {
             if (Common.isConnectedToInternet(this)) {
-                tutorId=listChatID.get(0);
+                studentId =listChatID.get(0);
                 userId=listChatID.get(1);
-                accessToUser(userId,tutorId);
+                accessToUser(userId, studentId);
             } else {
                 Toast.makeText(MainChatActivity.this, "Check your connection", Toast.LENGTH_SHORT).show();
                 return;
@@ -101,8 +116,9 @@ public class MainChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String msg=editText.getText().toString();
+                notify=true;
                 if(!msg.equals("")) {
-                    sendMessage(userId, tutorId, editText.getText().toString());
+                    sendMessage(userId, studentId, editText.getText().toString());
                 }
                 else {
                     Toast.makeText(MainChatActivity.this, "You can't send empty message", Toast.LENGTH_SHORT).show();
@@ -120,9 +136,70 @@ public class MainChatActivity extends AppCompatActivity {
         hashMap.put("reciever",reciever);
         hashMap.put("message",message);
         reference.child("Chat").push().setValue(hashMap);
+        final  String msg=message;
+        reference=FirebaseDatabase.getInstance().getReference("Tutor").child(sender);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Tutor user=dataSnapshot.getValue(Tutor.class);
+                ArrayList<String>listChat=new ArrayList<>();
+                listChat.add(reciever);
+                listChat.add(sender);
+                listChat.add(user.getUsername());
+                listChat.add(msg);
+                if(notify){
+                    sendNotification(listChat);
+                }
+                notify=false;
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
+    private void sendNotification(ArrayList<String> listChat) {
+        String reciever=listChat.get(0);
+        String sender=listChat.get(1);
+        String userName=listChat.get(2);
+        String msg=listChat.get(3);
+        DatabaseReference tokenRef=FirebaseDatabase.getInstance().getReference("Tokens");
+        tokenRef.orderByKey().equalTo(reciever).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot childSnap:dataSnapshot.getChildren()){
+                    Token token=childSnap.getValue(Token.class);
+                    Data data=new Data(reciever,R.mipmap.ic_launcher,userName+": "+msg,"Tin nhắn mới",
+                            sender);
+                    Sender send=new Sender(data,token.getToken());
+                    apiService.sendNotification(send)
+                            .enqueue(new Callback<MyRespone>() {
+                                @Override
+                                public void onResponse(Call<MyRespone> call, Response<MyRespone> response) {
+                                    if(response.code()==200){
+                                        if(response.body().success!=1){
+                                            Toast.makeText(MainChatActivity.this,"Failed",Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
 
+                                @Override
+                                public void onFailure(Call<MyRespone> call, Throwable t) {
+
+                                }
+                            });
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
     @Override
     protected void onStart() {
         super.onStart();

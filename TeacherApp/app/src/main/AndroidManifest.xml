@@ -25,7 +25,20 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
         <service android:name="com.example.learnenglishta.SinchService" />
-
+        <service android:name=".Notification.MyFirebaseService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+        <service android:name=".Notification.MyFirebaseMessaging"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
         <activity
             android:name="com.example.learnenglishta.Home2Activity"
             android:label="@string/title_activity_home2"

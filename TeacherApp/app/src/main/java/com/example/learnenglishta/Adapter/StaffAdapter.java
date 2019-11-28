@@ -64,7 +64,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
         holder.txtCourseName.setText(course.get(position).getCourseName());
         holder.txtDescript.setText(course.get(position).getDescript());
         DatabaseReference coureRef=FirebaseDatabase.getInstance().getReference("Course");
-        coureRef.orderByChild("tutorPhone").equalTo(course.get(position).getTutorPhone()).addValueEventListener(new ValueEventListener() {
+        coureRef.orderByChild("tutorPhone").equalTo(course.get(position).getTutorPhone()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot courseSnapshot:dataSnapshot.getChildren()){
