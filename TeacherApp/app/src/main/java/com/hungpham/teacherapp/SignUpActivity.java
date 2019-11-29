@@ -87,6 +87,7 @@ public class SignUpActivity extends AppCompatActivity {
                                                 map.put("username", usernameTemp);
                                                 map.put("password", passwordTemp);
                                                 map.put("email", emailTemp);//
+                                                map.put("status","offline");
                                                 table_user.child(edtPhone.getText().toString()).setValue(map);
                                                 Toast.makeText(SignUpActivity.this, "Sign up successfully", Toast.LENGTH_SHORT).show();
                                                 //finish();

@@ -169,25 +169,25 @@ public class Home2Activity extends AppCompatActivity
     }
 
     private void setStatus(final String status) {
-        final DatabaseReference user = database.getReference("User").child(userPhone);
+        final DatabaseReference user = database.getReference("Tutor").child(userPhone);
         HashMap<String, Object> map = new HashMap<>();
         map.put("status", status);
         user.updateChildren(map);
         //  user.child(phone).setValue(map);
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        setStatus("online");
-//    }
-//
-//      @Override
-//    protected void onStop() {
-//        super.onStop();
-//        setStatus("offline");
-//    }
-//
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setStatus("online");
+    }
+
+      @Override
+    protected void onStop() {
+        super.onStop();
+        setStatus("offline");
+    }
+
 //    @Override
 //    protected void onDestroy() {
 //        super.onDestroy();

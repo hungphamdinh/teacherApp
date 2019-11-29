@@ -48,7 +48,7 @@ public class LoginActivity2 extends BaseActivity implements SinchService.StartFa
         ckbRemember=(CheckBox) findViewById(R.id.ckbRememberUser);
         login= (Button)findViewById(R.id.btnLogin);
         txtSignUp=(TextView)findViewById(R.id.txtSignUpNewAc);
-        //setupUI(findViewById(R.id.parent));
+        setupUI(findViewById(R.id.parent));
         firebaseDatabase=FirebaseDatabase.getInstance();
         tutorRef =firebaseDatabase.getReference("Tutor");
         Firebase.setAndroidContext(LoginActivity2.this);
@@ -147,11 +147,11 @@ public class LoginActivity2 extends BaseActivity implements SinchService.StartFa
                     progressDialog = getProgressDialog();
                     final String userNameTemp = username.getText().toString();
                     final String passwordTemp = password.getText().toString();
-                    table_user.addValueEventListener(new ValueEventListener() {
+                    table_user.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if (userNameTemp.equals("") || passwordTemp.equals("")) {
-                                progressDialog.dismiss();
+                                progressDialog.cancel();
                                 Toast.makeText(LoginActivity2.this, "Please check your username and password", Toast.LENGTH_SHORT).show();
                             } else {
                                 if (dataSnapshot.child(username.getText().toString()).exists()) {
@@ -159,9 +159,10 @@ public class LoginActivity2 extends BaseActivity implements SinchService.StartFa
                                     //tutor.setPhone(username.getText().toString());
 
                                     if (tutor.getPassword().equals(password.getText().toString())) {
+                                        progressDialog.cancel();
                                         if (!getSinchServiceInterface().isStarted()) {
                                             getSinchServiceInterface().startClient(userNameTemp);
-                                            progressDialog = getProgressDialog();
+//                                            progressDialog = getProgressDialog();
                                         }
                                         Intent intent = new Intent(LoginActivity2.this, Home2Activity.class);
                                         intent.putExtra("phoneUser",userNameTemp);
@@ -169,13 +170,12 @@ public class LoginActivity2 extends BaseActivity implements SinchService.StartFa
                                         startActivity(intent);
                                         finish();
                                         Toast.makeText(LoginActivity2.this,"Log in successfully",Toast.LENGTH_LONG).show();
-                                        progressDialog.dismiss();
                                     } else {
-                                        progressDialog.dismiss();
+                                        progressDialog.cancel();
                                         Toast.makeText(LoginActivity2.this, "Please check your username and password", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
-                                    progressDialog.dismiss();
+                                    progressDialog.cancel();
                                     Toast.makeText(LoginActivity2.this, "This account is not exist", Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -195,35 +195,34 @@ public class LoginActivity2 extends BaseActivity implements SinchService.StartFa
         });
     }
 
-//    public static void hideSoftKeyboard(Activity activity) {
-//        InputMethodManager inputMethodManager =
-//                (InputMethodManager) activity.getSystemService(
-//                        Activity.INPUT_METHOD_SERVICE);
-//        inputMethodManager.hideSoftInputFromWindow(
-//                activity.getCurrentFocus().getWindowToken(), 0);
-//    }
-//    public void setupUI(View view) {
-//
-//        // Set up touch listener for non-text box views to hide keyboard.
-//        if (!(view instanceof EditText)) {
-//            view.setOnTouchListener(new View.OnTouchListener() {
-//                public boolean onTouch(View v, MotionEvent event) {
-//                    hideSoftKeyboard(LoginActivity2.this);
-//                    return false;
-//                }
-//            });
-//        }
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                activity.getCurrentFocus().getWindowToken(), 0);
+    }
+    public void setupUI(View view) {
 
-        //If a layout container, iterate over children and seed recursion.
-//        if (view instanceof ViewGroup) {
-//            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
-//                View innerView = ((ViewGroup) view).getChildAt(i);
-//                setupUI(innerView);
-//            }
-//        }
-//    }
-//
-//
+        // Set up touch listener for non-text box views to hide keyboard.
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    hideSoftKeyboard(LoginActivity2.this);
+                    return false;
+                }
+            });
+        }
+
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
+    }
+
+
 
     @Override
     protected void onServiceConnected() {

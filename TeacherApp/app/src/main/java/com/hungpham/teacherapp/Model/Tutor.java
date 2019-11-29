@@ -5,6 +5,15 @@ public class Tutor {
     String username;
     String password;
     String experience;
+    String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public Tutor(){}
     public String getEmail() {
