@@ -48,7 +48,7 @@ public class LoginActivity2 extends BaseActivity implements SinchService.StartFa
         ckbRemember=(CheckBox) findViewById(R.id.ckbRememberUser);
         login= (Button)findViewById(R.id.btnLogin);
         txtSignUp=(TextView)findViewById(R.id.txtSignUpNewAc);
-        setupUI(findViewById(R.id.parent));
+        //setupUI(findViewById(R.id.parent));
         firebaseDatabase=FirebaseDatabase.getInstance();
         tutorRef =firebaseDatabase.getReference("Tutor");
         Firebase.setAndroidContext(LoginActivity2.this);
@@ -195,35 +195,35 @@ public class LoginActivity2 extends BaseActivity implements SinchService.StartFa
         });
     }
 
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(
-                activity.getCurrentFocus().getWindowToken(), 0);
-    }
-    public void setupUI(View view) {
-
-        // Set up touch listener for non-text box views to hide keyboard.
-        if (!(view instanceof EditText)) {
-            view.setOnTouchListener(new View.OnTouchListener() {
-                public boolean onTouch(View v, MotionEvent event) {
-                    hideSoftKeyboard(LoginActivity2.this);
-                    return false;
-                }
-            });
-        }
+//    public static void hideSoftKeyboard(Activity activity) {
+//        InputMethodManager inputMethodManager =
+//                (InputMethodManager) activity.getSystemService(
+//                        Activity.INPUT_METHOD_SERVICE);
+//        inputMethodManager.hideSoftInputFromWindow(
+//                activity.getCurrentFocus().getWindowToken(), 0);
+//    }
+//    public void setupUI(View view) {
+//
+//        // Set up touch listener for non-text box views to hide keyboard.
+//        if (!(view instanceof EditText)) {
+//            view.setOnTouchListener(new View.OnTouchListener() {
+//                public boolean onTouch(View v, MotionEvent event) {
+//                    hideSoftKeyboard(LoginActivity2.this);
+//                    return false;
+//                }
+//            });
+//        }
 
         //If a layout container, iterate over children and seed recursion.
-        if (view instanceof ViewGroup) {
-            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
-                View innerView = ((ViewGroup) view).getChildAt(i);
-                setupUI(innerView);
-            }
-        }
-    }
-
-
+//        if (view instanceof ViewGroup) {
+//            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+//                View innerView = ((ViewGroup) view).getChildAt(i);
+//                setupUI(innerView);
+//            }
+//        }
+//    }
+//
+//
 
     @Override
     protected void onServiceConnected() {

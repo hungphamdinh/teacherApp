@@ -115,19 +115,11 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child:dataSnapshot.getChildren()) {
                     if (child.getKey().equals(keyUser)) {
-                        Intent intent = new Intent(MyFirebaseMessaging.this, MainChatActivity.class);
-                        ArrayList<String>chatList=new ArrayList<>();
-                        chatList.add(keyUser);
-                        chatList.add(user);
-                        intent.putStringArrayListExtra("ChatID",chatList);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        PendingIntent pendingIntent = PendingIntent.getActivity(MyFirebaseMessaging.this, j, intent, PendingIntent.FLAG_ONE_SHOT);
-                        Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
                         //int NOTIFICATION_ID = 234;
                         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-
+                        String CHANNEL_ID = "my_channel_01";
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                            String CHANNEL_ID = "my_channel_01";
                             CharSequence name = "my_channel";
                             String Description = "This is my channel";
                             int importance = NotificationManager.IMPORTANCE_HIGH;
@@ -140,8 +132,15 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                             mChannel.setShowBadge(false);
                             notificationManager.createNotificationChannel(mChannel);
                         }
-
-                        NotificationCompat.Builder builder = new NotificationCompat.Builder(MyFirebaseMessaging.this)
+                        Intent intent = new Intent(MyFirebaseMessaging.this, MainChatActivity.class);
+                        ArrayList<String>chatList=new ArrayList<>();
+                        chatList.add(user);
+                        chatList.add(keyUser);
+                        intent.putStringArrayListExtra("ChatID",chatList);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        PendingIntent pendingIntent = PendingIntent.getActivity(MyFirebaseMessaging.this, j, intent, PendingIntent.FLAG_ONE_SHOT);
+                        Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(MyFirebaseMessaging.this,CHANNEL_ID)
                                 .setSmallIcon(Integer.parseInt(icon))
                                 .setContentTitle(title)
                                 .setContentText(body)
