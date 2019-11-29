@@ -10,7 +10,7 @@
             android:iconTint="#fff"
             android:title="Trang chủ" />
         <item
-            android:id="@+id/nav_order"
+            android:id="@+id/nav_feedback"
             android:icon="@drawable/ic_unfold_less_black_24dp"
             android:iconTint="#fff"
             android:title="Feedback" />

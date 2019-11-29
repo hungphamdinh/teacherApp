@@ -25,7 +25,6 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="5dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/profile"
                     app:civ_border_width="1dp"
                     app:civ_border_color="@color/fbutton_color_emerald"/>
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -36,7 +35,6 @@
                     android:layout_marginTop="10dp"
                     android:layout_below="@id/imgProfile"
                     android:layout_height="15dp"
-                    android:src="@mipmap/ic_launcher"
                     app:civ_border_width="10dp"
                     app:civ_border_color="#05df29"
                     android:layout_toRightOf="@id/imgProfile"

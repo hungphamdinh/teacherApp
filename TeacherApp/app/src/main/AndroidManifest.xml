@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.learnenglishta">
+    package="com.hungpham.teacherapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -16,23 +16,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.learnenglishta.MainChatActivity"
+        <activity android:name="com.hungpham.teacherapp.MainChatActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             ></activity>
         <activity
-            android:name="com.example.learnenglishta.StudentDetailActivity"
+            android:name="com.hungpham.teacherapp.StudentDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
-        <service android:name="com.example.learnenglishta.SinchService" />
-        <service android:name=".Notification.MyFirebaseService"
+        <service android:name="com.hungpham.teacherapp.SinchService" />
+        <service android:name="com.hungpham.teacherapp.Notification.MyFirebaseService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
-        <service android:name=".Notification.MyFirebaseMessaging"
+        <service android:name="com.hungpham.teacherapp.Notification.MyFirebaseMessaging"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -40,18 +40,18 @@
             </intent-filter>
         </service>
         <activity
-            android:name="com.example.learnenglishta.Home2Activity"
+            android:name="com.hungpham.teacherapp.Home2Activity"
             android:label="@string/title_activity_home2"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name="com.example.learnenglishta.SignUpActivity"
+            android:name="com.hungpham.teacherapp.SignUpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.example.learnenglishta.MyAccountActivity"
+            android:name="com.hungpham.teacherapp.MyAccountActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.example.learnenglishta.LoginActivity2"
+            android:name="com.hungpham.teacherapp.LoginActivity2"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -61,15 +61,15 @@
         </activity>
 
         <activity
-            android:name="com.example.learnenglishta.CallScreenActivity"
+            android:name="com.hungpham.teacherapp.CallScreenActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.example.learnenglishta.IncomingCallScreenActivity"
+            android:name="com.hungpham.teacherapp.IncomingCallScreenActivity"
             android:noHistory="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.example.learnenglishta.PlaceCallActivity"
+            android:name="com.hungpham.teacherapp.PlaceCallActivity"
             android:screenOrientation="portrait" />
     </application>
 
