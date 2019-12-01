@@ -1,6 +1,7 @@
 package com.hungpham.teacherapp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -22,19 +23,20 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.sinch.android.rtc.calling.Call;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class StudentDetailActivity extends BaseActivity {
     private DatabaseReference userRef;
     private FirebaseDatabase database;
-    private TextView txtUsername,txtTitle,txtCountry,txtEmail,txtExp,txtCourseDoc;
+    private TextView txtUsername,txtTitle,txtCountry,txtEmail,txtStatus,txtCourseDoc;
     private String studentId;
     private String userId;
     private String courseId;
     private Button btnChat;
     private Button btnCall;
-    private CircleImageView profileImage;
+    private CircleImageView profileImage,imgStatus;
     private ArrayList<String> listChatID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,8 @@ public class StudentDetailActivity extends BaseActivity {
         txtEmail=(TextView)findViewById(R.id.txtEmailTutor);
         txtTitle=(TextView)findViewById(R.id.txtTitleTutorDetail);
         txtCountry=(TextView)findViewById(R.id.txtCountryTutor);
+        txtStatus=(TextView)findViewById(R.id.txtTutorStatusDe);
+        imgStatus=(CircleImageView)findViewById(R.id.imgStatusTutorDe);
         profileImage=(CircleImageView)findViewById(R.id.imgProfile);
         txtCourseDoc=(TextView)findViewById(R.id.txtCourseDocDetail);
         btnChat=(Button)findViewById(R.id.btnMessage);
@@ -144,6 +148,17 @@ public class StudentDetailActivity extends BaseActivity {
                 User student=dataSnapshot.getValue(User.class);
 //                Picasso.with(getBaseContext()).load(curentFood.getImage()).into(foodImage);
 //                collapsingToolbarLayout.setTitle(curentFood.getName());
+                if(student.getStatus().equals("offline")){
+                    txtStatus.setText("Học viên hiện không hoạt động");
+                    txtStatus.setTextColor(Color.parseColor("#FF0000"));
+                    imgStatus.setVisibility(View.INVISIBLE);
+                }
+                else{
+                    txtStatus.setText("Học viên đang hoạt động");
+                    txtStatus.setTextColor(Color.parseColor("#00FF00"));
+                    imgStatus.setVisibility(View.VISIBLE);
+
+                }
                 txtTitle.setText(student.getUsername());
                 txtUsername.setText(student.getUsername());
                 txtEmail.setText(student.getEmail());
@@ -160,7 +175,12 @@ public class StudentDetailActivity extends BaseActivity {
             }
         });
     }
-
+    private void setStatus(String status){
+        HashMap<String,Object> map=new HashMap<>();
+        map.put("status",status);
+        DatabaseReference userRef=FirebaseDatabase.getInstance().getReference("Tutor");
+        userRef.child(userId).updateChildren(map);
+    }
     @Override
     protected void onServiceConnected() {
 //        TextView userName = (TextView) findViewById(R.id.loggedInName);
@@ -172,5 +192,16 @@ public class StudentDetailActivity extends BaseActivity {
             getSinchServiceInterface().stopClient();
         }
         finish();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setStatus("online");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        setStatus("offline");
     }
 }

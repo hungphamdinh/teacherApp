@@ -3,6 +3,7 @@ package com.hungpham.teacherapp.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -120,6 +121,16 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User student=dataSnapshot.getValue(User.class);
+                if(student.getStatus().equals("offline")){
+                    viewHolder.txtStatus.setText("Học viên hiện không hoạt động");
+                    viewHolder.txtStatus.setTextColor(Color.parseColor("#FF0000"));
+                    viewHolder.imgStatus.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    viewHolder.txtStatus.setText("Học viên hiện đang hoạt động");
+                    viewHolder.txtStatus.setTextColor(Color.parseColor(	"#00FF00"));
+                    viewHolder.imgStatus.setVisibility(View.VISIBLE);
+                }
                 viewHolder.txtName.setText(student.getUsername());
                 viewHolder.txtEmail.setText(student.getEmail());
                 Glide.with(context)
@@ -164,9 +175,9 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
         });
     }
     public class StaffViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
-        public TextView txtName, txtCourseName, txtDescript, txtEmail, txtSchedule;
+        public TextView txtName, txtCourseName, txtStatus, txtEmail, txtSchedule;
         private ItemClickListener itemClickListener;
-        private CircleImageView profileImage;
+        private CircleImageView profileImage,imgStatus;
         private ImageView image;
 
         public StaffViewHolder(View itemView) {
@@ -174,9 +185,10 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
             txtName = (TextView) itemView.findViewById(R.id.txtUserNameMyCourse);
             txtEmail = (TextView) itemView.findViewById(R.id.txtEmailMyCourse);
             txtCourseName = (TextView) itemView.findViewById(R.id.txtTitleMyCourse);
-//            txtDescript = (TextView) itemView.findViewById(R.id.txtCourseDescriptMyCourse);
+            txtStatus = (TextView) itemView.findViewById(R.id.txtTutorStatus);
             txtSchedule = (TextView) itemView.findViewById(R.id.txtScheduleMyCourse);
             image=(ImageView)itemView.findViewById(R.id.imgMyCourse);
+            imgStatus=(CircleImageView) itemView.findViewById(R.id.imgStatusTutor);
             profileImage=(CircleImageView)itemView.findViewById(R.id.imgProfileMyCourse);
             itemView.setOnClickListener(this);
             itemView.setOnCreateContextMenuListener(this);

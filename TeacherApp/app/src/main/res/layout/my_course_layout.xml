@@ -97,7 +97,7 @@
                         app:civ_border_color="#666666"/>
                     <de.hdodenhof.circleimageview.CircleImageView
                         xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:id="@+id/imgStatus"
+                        android:id="@+id/imgStatusTutor"
                         android:layout_gravity="end|right|bottom"
                         android:layout_width="15dp"
                         android:layout_marginTop="10dp"
@@ -150,6 +150,16 @@
                         android:text="Address"
                         android:layout_marginTop="6dp"
                         android:textColor="#666666"
+                        />
+                    <TextView
+                        android:textSize="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtTutorStatus"
+                        android:textStyle="italic"
+                        android:text=""
+                        android:layout_marginTop="6dp"
+                        android:textColor="#FF0000"
                         />
                 </LinearLayout>
 
