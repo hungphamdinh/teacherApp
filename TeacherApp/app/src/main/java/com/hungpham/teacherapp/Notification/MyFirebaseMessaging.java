@@ -31,18 +31,13 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
         String sented=remoteMessage.getData().get("sented");
         DatabaseReference userRef= FirebaseDatabase.getInstance().getReference("Tutor");
-        userRef.addValueEventListener(new ValueEventListener() {
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot childSnap:dataSnapshot.getChildren()){
                     String userKey=childSnap.getKey();
                     if (userRef!=null&&sented.equals(userKey)){
-//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                            sendOreoNotification(remoteMessage,userKey);
-//                        }
-                      //  else {
                             sendNotification(remoteMessage,userKey);
-                      //  }
                     }
                 }
             }
@@ -54,53 +49,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         });
 
     }
-//    private void sendOreoNotification(RemoteMessage remoteMessage,String keyUser){
-//        String user = remoteMessage.getData().get("user");
-//        String icon = remoteMessage.getData().get("icon");
-//        String title = remoteMessage.getData().get("title");
-//        String body = remoteMessage.getData().get("body");
-//
-//        RemoteMessage.Notification notification = remoteMessage.getNotification();
-//        int j = Integer.parseInt(user.replaceAll("[\\D]", ""));
-//        DatabaseReference userRef=FirebaseDatabase.getInstance().getReference("Tutor");
-//        Intent intent = new Intent(this, MainChatActivity.class);
-//        userRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for (DataSnapshot snapshot:dataSnapshot.getChildren()){
-//                    String userKey=snapshot.getKey();
-//                    if(userKey.equals(keyUser)){
-//                        ArrayList<String> chatList=new ArrayList<>();
-//                        chatList.add(keyUser);
-//                        chatList.add(user);
-//                        intent.putStringArrayListExtra("ChatID",chatList);
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                        PendingIntent pendingIntent = PendingIntent.getActivity(MyFirebaseMessaging.this, j, intent, PendingIntent.FLAG_ONE_SHOT);
-//                        Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-//
-//                        OreoNotification oreoNotification = new OreoNotification(MyFirebaseMessaging.this);
-//                        Notification.Builder builder = oreoNotification.getOreoNotification(title, body, pendingIntent,
-//                                defaultSound, icon);
-//
-//                        int i = 0;
-//                        if (j > 0){
-//                            i = j;
-//                        }
-//
-//                        oreoNotification.getManager().notify(i, builder.build());
-//                    }
-//
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//    }
 
     private void sendNotification(RemoteMessage remoteMessage,String keyUser) {
         String user=remoteMessage.getData().get("user");
@@ -110,7 +58,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         RemoteMessage.Notification notification=remoteMessage.getNotification();
         int j=Integer.parseInt(user.replaceAll("[\\D]",""));
         DatabaseReference tutorRef=FirebaseDatabase.getInstance().getReference("Tutor");
-        tutorRef.addValueEventListener(new ValueEventListener() {
+        tutorRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child:dataSnapshot.getChildren()) {

@@ -13,10 +13,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.hungpham.teacherapp.Common.Common;
 import com.hungpham.teacherapp.Interface.ItemClickListener;
 import com.hungpham.teacherapp.Model.Course;
 import com.hungpham.teacherapp.Model.Request;
+import com.hungpham.teacherapp.Model.Tutor;
 import com.hungpham.teacherapp.Model.User;
 import com.hungpham.teacherapp.R;
 import com.hungpham.teacherapp.StudentDetailActivity;
@@ -25,8 +27,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHolder>  {
@@ -60,7 +65,12 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
     @Override
     public void onBindViewHolder(@NonNull StaffViewHolder holder, int position) {
         holder.txtCourseName.setText(course.get(position).getCourseName());
-        holder.txtDescript.setText(course.get(position).getDescript());
+        holder.txtSchedule.setText(course.get(position).getSchedule());
+        Glide.with(context)
+                .load(course.get(position).getImage())
+                .centerCrop()
+                // .placeholder(R.drawable.loading_spinner)
+                .into(holder.image);
         DatabaseReference coureRef=FirebaseDatabase.getInstance().getReference("Course");
         coureRef.orderByChild("tutorPhone").equalTo(course.get(position).getTutorPhone()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -112,6 +122,13 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
                 User student=dataSnapshot.getValue(User.class);
                 viewHolder.txtName.setText(student.getUsername());
                 viewHolder.txtEmail.setText(student.getEmail());
+                Glide.with(context)
+                        .load(student.getAvatar())
+                        .centerCrop()
+                       // .placeholder(R.drawable.loading_spinner)
+                        .into(viewHolder.profileImage);
+
+
             }
 
             @Override
@@ -149,14 +166,18 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
     public class StaffViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
         public TextView txtName, txtCourseName, txtDescript, txtEmail, txtSchedule;
         private ItemClickListener itemClickListener;
+        private CircleImageView profileImage;
+        private ImageView image;
 
         public StaffViewHolder(View itemView) {
             super(itemView);
             txtName = (TextView) itemView.findViewById(R.id.txtUserNameMyCourse);
             txtEmail = (TextView) itemView.findViewById(R.id.txtEmailMyCourse);
             txtCourseName = (TextView) itemView.findViewById(R.id.txtTitleMyCourse);
-            txtDescript = (TextView) itemView.findViewById(R.id.txtCourseDescriptMyCourse);
+//            txtDescript = (TextView) itemView.findViewById(R.id.txtCourseDescriptMyCourse);
             txtSchedule = (TextView) itemView.findViewById(R.id.txtScheduleMyCourse);
+            image=(ImageView)itemView.findViewById(R.id.imgMyCourse);
+            profileImage=(CircleImageView)itemView.findViewById(R.id.imgProfileMyCourse);
             itemView.setOnClickListener(this);
             itemView.setOnCreateContextMenuListener(this);
         }

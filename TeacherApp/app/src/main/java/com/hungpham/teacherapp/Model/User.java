@@ -4,6 +4,15 @@ public class User {
     private String username;
     private String password;
     private String phone;
+    private String avatar;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public String getStatus() {
         return status;

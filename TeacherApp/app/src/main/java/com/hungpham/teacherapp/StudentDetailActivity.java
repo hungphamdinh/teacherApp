@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.hungpham.teacherapp.Common.Common;
 import com.hungpham.teacherapp.Model.Doc;
 import com.hungpham.teacherapp.Model.User;
@@ -22,6 +23,8 @@ import com.sinch.android.rtc.calling.Call;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class StudentDetailActivity extends BaseActivity {
     private DatabaseReference userRef;
     private FirebaseDatabase database;
@@ -31,6 +34,7 @@ public class StudentDetailActivity extends BaseActivity {
     private String courseId;
     private Button btnChat;
     private Button btnCall;
+    private CircleImageView profileImage;
     private ArrayList<String> listChatID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,7 @@ public class StudentDetailActivity extends BaseActivity {
         txtEmail=(TextView)findViewById(R.id.txtEmailTutor);
         txtTitle=(TextView)findViewById(R.id.txtTitleTutorDetail);
         txtCountry=(TextView)findViewById(R.id.txtCountryTutor);
+        profileImage=(CircleImageView)findViewById(R.id.imgProfile);
         txtCourseDoc=(TextView)findViewById(R.id.txtCourseDocDetail);
         btnChat=(Button)findViewById(R.id.btnMessage);
         btnCall=(Button)findViewById(R.id.btnCallTutor);
@@ -142,6 +147,11 @@ public class StudentDetailActivity extends BaseActivity {
                 txtTitle.setText(student.getUsername());
                 txtUsername.setText(student.getUsername());
                 txtEmail.setText(student.getEmail());
+                Glide.with(StudentDetailActivity.this)
+                        .load(student.getAvatar())
+                        .centerCrop()
+                        // .placeholder(R.drawable.loading_spinner)
+                        .into(profileImage);
             }
 
             @Override

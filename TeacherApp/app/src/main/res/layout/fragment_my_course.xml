@@ -12,7 +12,7 @@
         android:layout_marginTop="90dp"
         android:id="@+id/listOrderRecycler"
         android:padding="2dp"
-        android:background="@drawable/side_nav_bar"
+        android:background="#fff"
         >
     </androidx.recyclerview.widget.RecyclerView>
 

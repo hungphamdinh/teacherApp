@@ -5,6 +5,15 @@ public class Course {
     private String descript;
     private String discount;
     private String price;
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public String getIsBuy() {
         return isBuy;

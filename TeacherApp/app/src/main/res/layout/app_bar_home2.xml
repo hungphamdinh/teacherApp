@@ -4,31 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="#fff"
     tools:context=".Home2Activity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/side_nav_bar"
+        android:background="#fff"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@drawable/side_nav_bar"
+            android:background="#666666"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:background="@drawable/side_nav_bar"
+            android:background="#666666"
             android:layout_height="wrap_content"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <include
         layout="@layout/content_home2"
+
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:layout_width="350dp" />

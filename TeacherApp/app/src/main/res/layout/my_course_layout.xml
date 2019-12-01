@@ -1,120 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    >
-    <androidx.cardview.widget.CardView
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <FrameLayout
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <de.hdodenhof.circleimageview.CircleImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/imgProfileMyCourse"
-                    android:layout_width="50dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_height="50dp"
-                    app:civ_border_width="1dp"
-                    app:civ_border_color="@color/fbutton_color_emerald"/>
-                <de.hdodenhof.circleimageview.CircleImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/imgStatus"
-                    android:layout_gravity="end|right|bottom"
-                    android:layout_width="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@id/imgProfile"
-                    android:layout_height="15dp"
-                    app:civ_border_width="10dp"
-                    app:civ_border_color="#05df29"
-                    android:layout_toRightOf="@id/imgProfile"
-                    android:layout_toEndOf="@id/imgProfile"
-                    />
-            </FrameLayout>
-
-
-            <LinearLayout
-                android:layout_marginRight="10dp"
-                android:gravity="end"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtUserNameMyCourse"
-                    android:textStyle="italic"
-                    android:text="UserName"
-                    android:layout_marginTop="6dp"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtEmailMyCourse"
-                    android:textStyle="italic"
-                    android:text="Address"
-                    android:layout_marginTop="6dp"
-
-                    />
-            </LinearLayout>
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardUseCompatPadding="true"
+    app:cardElevation="10dp"
+    app:cardCornerRadius="10dp"
+    android:orientation="vertical">
     <LinearLayout
-
+        android:background="#666666"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:orientation="vertical">
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            app:cardUseCompatPadding="true"
+            app:cardElevation="10dp"
+            app:cardCornerRadius="10dp"
             android:id="@+id/detailLayout"
-            android:background="@drawable/side_nav_bar"
+            android:gravity="end"
             android:orientation="vertical">
-            <TextView
+            <LinearLayout
+                android:background="#666"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25dp"
-                android:textColor="#fff"
-                android:background="#000"
-                android:text="Title"
-                android:id="@+id/txtTitleMyCourse"
-                android:textAlignment="center"
-                />
-            <TextView
-                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                >
+                <ImageView
+                    android:id="@+id/imgMyCourse"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="end"
+                    android:layout_gravity="center"
+                    >
+                    <TextView
+                        android:layout_marginRight="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16dp"
+                        android:textColor="#fff"
+                        android:text="Title"
+                        android:textStyle="bold"
+                        android:id="@+id/txtTitleMyCourse"
+                        android:textAlignment="center"
+                        />
+                    <TextView
+                        android:layout_marginRight="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#fff"
+                        android:text="Thời khóa biểu: "
+                        android:textSize="16dp"
+                        android:textStyle="italic"
+                        android:id="@+id/txtScheduleMyCourse"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            app:cardUseCompatPadding="true"
+            app:cardElevation="10dp"
+            app:cardCornerRadius="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:background="#fff"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#fff"
-                android:text="Thời khóa biểu: "
-                android:textSize="20dp"
-                android:textStyle="italic"
-                android:id="@+id/txtScheduleMyCourse"
-                />
+                android:orientation="horizontal"
+                >
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/imgProfileMyCourse"
+                        android:layout_width="50dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_height="50dp"
+                        app:civ_border_width="1dp"
+                        app:civ_border_color="#666666"/>
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/imgStatus"
+                        android:layout_gravity="end|right|bottom"
+                        android:layout_width="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@id/imgProfileMyCourse"
+                        android:layout_height="15dp"
+                        app:civ_border_width="10dp"
+                        app:civ_border_color="#05df29"
+                        android:src="@mipmap/ic_launcher"
+                        android:layout_toRightOf="@id/imgProfileMyCourse"
+                        android:layout_toEndOf="@id/imgProfileMyCourse"
+                        />
+                </FrameLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#fff"
-                android:text="Descript: "
-                android:textSize="15dp"
-                android:id="@+id/txtCourseDescriptMyCourse"
-                />
 
-        </LinearLayout>
+                <LinearLayout
+                    android:gravity="end"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginVertical="5dp"
+                    >
 
-</LinearLayout>
-</LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#fff"
+                        android:textColor="#666666"
+                        android:textStyle="bold"
+                        android:textSize="16dp"
+                        android:text="Thông tin người học"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtUserNameMyCourse"
+                        android:textStyle="italic"
+                        android:textSize="16dp"
+                        android:text="UserName"
+                        android:textColor="#666666"
+                        android:layout_marginTop="6dp"
+                        />
+
+                    <TextView
+                        android:textSize="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtEmailMyCourse"
+                        android:textStyle="italic"
+                        android:text="Address"
+                        android:layout_marginTop="6dp"
+                        android:textColor="#666666"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

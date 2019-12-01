@@ -49,7 +49,7 @@ public class MyCourseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tutor,container,false);
+        View view = inflater.inflate(R.layout.fragment_my_course,container,false);
         database= FirebaseDatabase.getInstance();
         courseRef =database.getReference("Course");
         recyclerMenu=(RecyclerView)view.findViewById(R.id.listOrderRecycler);

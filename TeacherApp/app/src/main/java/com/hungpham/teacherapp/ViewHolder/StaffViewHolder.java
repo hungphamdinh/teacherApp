@@ -10,9 +10,12 @@ import com.hungpham.teacherapp.Common.Common;
 import com.hungpham.teacherapp.Interface.ItemClickListener;
 import com.hungpham.teacherapp.R;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class StaffViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
     public TextView txtName,txtCourseName,txtDescript,txtEmail,txtSchedule;
+    private CircleImageView profileImage;
     private ItemClickListener itemClickListener;
 
     public StaffViewHolder(View itemView) {
@@ -20,7 +23,7 @@ public class StaffViewHolder extends RecyclerView.ViewHolder implements View.OnC
         txtName=(TextView)itemView.findViewById(R.id.txtUserNameMyCourse);
         txtEmail=(TextView)itemView.findViewById(R.id.txtEmailMyCourse);
         txtCourseName=(TextView)itemView.findViewById(R.id.txtTitleMyCourse);
-        txtDescript=(TextView)itemView.findViewById(R.id.txtCourseDescriptMyCourse);
+//        txtDescript=(TextView)itemView.findViewById(R.id.txtCourseDescriptMyCourse);
         txtSchedule=(TextView)itemView.findViewById(R.id.txtScheduleMyCourse);
         itemView.setOnClickListener(this);
         itemView.setOnCreateContextMenuListener(this);
