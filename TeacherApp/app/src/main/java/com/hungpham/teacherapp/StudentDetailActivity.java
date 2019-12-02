@@ -162,7 +162,7 @@ public class StudentDetailActivity extends BaseActivity {
                 txtTitle.setText(student.getUsername());
                 txtUsername.setText(student.getUsername());
                 txtEmail.setText(student.getEmail());
-                Glide.with(StudentDetailActivity.this)
+                Glide.with(getApplicationContext())
                         .load(student.getAvatar())
                         .centerCrop()
                         // .placeholder(R.drawable.loading_spinner)

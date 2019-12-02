@@ -234,5 +234,22 @@ public class MainChatActivity extends AppCompatActivity {
             }
         });
     }
+    private void setStatus(String status){
+        HashMap<String,Object> map=new HashMap<>();
+        map.put("status",status);
+        DatabaseReference userRef=FirebaseDatabase.getInstance().getReference("Tutor");
+        userRef.child(userId).updateChildren(map);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setStatus("online");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        setStatus("offline");
+    }
 }
 

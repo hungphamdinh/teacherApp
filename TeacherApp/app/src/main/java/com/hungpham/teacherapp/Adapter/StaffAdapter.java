@@ -133,7 +133,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
                 }
                 viewHolder.txtName.setText(student.getUsername());
                 viewHolder.txtEmail.setText(student.getEmail());
-                Glide.with(context)
+                Glide.with(context.getApplicationContext())
                         .load(student.getAvatar())
                         .centerCrop()
                        // .placeholder(R.drawable.loading_spinner)
