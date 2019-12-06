@@ -1,4 +1,4 @@
-package com.hungpham.teacherapp;
+package com.hungpham.teacherapp.Sinch;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,8 +10,10 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hungpham.teacherapp.BaseActivity;
 import com.hungpham.teacherapp.Interface.ItemClickListener;
-import com.hungpham.teacherapp.Model.User;
+import com.hungpham.teacherapp.Model.Entities.User;
+import com.hungpham.teacherapp.R;
 import com.hungpham.teacherapp.ViewHolder.StaffViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout tools:context=".LoginActivity2"
+<androidx.constraintlayout.widget.ConstraintLayout tools:context=".View.LoginActivity2"
     android:layout_height="match_parent"
     android:backgroundTint="@android:color/transparent"
     android:id="@+id/parent"

@@ -1,6 +1,6 @@
 package com.hungpham.teacherapp.Notification;
 
-import com.hungpham.teacherapp.Model.Tutor;
+import com.hungpham.teacherapp.Model.Entities.Tutor;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

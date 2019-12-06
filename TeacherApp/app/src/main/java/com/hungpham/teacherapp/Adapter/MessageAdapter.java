@@ -10,12 +10,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hungpham.teacherapp.Model.Chat;
+import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+import com.hungpham.teacherapp.Model.Entities.Chat;
+import com.hungpham.teacherapp.Model.Entities.User;
 import com.hungpham.teacherapp.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ChatViewHolder> {
@@ -24,14 +30,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ChatView
     public static final int MSG_LEFT=0;
     public DatabaseReference chatRef;
     public FirebaseDatabase database;
-    private String userId;
+    private HashMap<String,Object> id;
     public static final int MSG_RIGHT=1;
-    //private String imgUrl;
-    public MessageAdapter(Context context, ArrayList<Chat> chat,String userId) {
+    public MessageAdapter(Context context, ArrayList<Chat> chat, HashMap<String,Object>id) {
         this.context = context;
         this.chat = chat;
-        //this.imgUrl=imgUrl;
-        this.userId=userId;
+        this.id=id;
     }
     public MessageAdapter(){
 
@@ -52,10 +56,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ChatView
 
     @Override
     public int getItemViewType(int position) {
-
         database = FirebaseDatabase.getInstance();
         chatRef = database.getReference("Chat");
-        if(chat.get(position).getSender().equals(userId)) {
+        if(chat.get(position).getSender().equals(id.get("userId").toString())) {
             return MSG_RIGHT;
         }
         else{
@@ -67,7 +70,23 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ChatView
     public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
         Chat chatItem=chat.get(position);
         holder.showMessage.setText(chatItem.getMessage());
+        DatabaseReference receiverRef=FirebaseDatabase.getInstance().getReference("User");
+        receiverRef.child(id.get("studentId").toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User tutor=dataSnapshot.getValue(User.class);
+                Glide.with(context)
+                        .load(tutor.getAvatar())
+                        .centerCrop()
+                        // .placeholder(R.drawable.loading_spinner)
+                        .into(holder.profileImage);
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override

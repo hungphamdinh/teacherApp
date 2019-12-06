@@ -1,4 +1,4 @@
-package com.hungpham.teacherapp.Model;
+package com.hungpham.teacherapp.Model.Entities;
 
 import java.util.List;
 

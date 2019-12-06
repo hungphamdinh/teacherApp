@@ -21,10 +21,10 @@
             android:theme="@style/Theme.AppCompat.NoActionBar"
             ></activity>
         <activity
-            android:name="com.hungpham.teacherapp.StudentDetailActivity"
+            android:name="com.hungpham.teacherapp.View.LoadDetailMyCourse.StudentDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
-        <service android:name="com.hungpham.teacherapp.SinchService" />
+        <service android:name="com.hungpham.teacherapp.Sinch.SinchService" />
         <service android:name="com.hungpham.teacherapp.Notification.MyFirebaseService"
             android:enabled="true"
             android:exported="true">
@@ -51,7 +51,7 @@
             android:name="com.hungpham.teacherapp.MyAccountActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.hungpham.teacherapp.LoginActivity2"
+            android:name="com.hungpham.teacherapp.View.LoginActivity2"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -61,15 +61,15 @@
         </activity>
 
         <activity
-            android:name="com.hungpham.teacherapp.CallScreenActivity"
+            android:name="com.hungpham.teacherapp.Sinch.CallScreenActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.hungpham.teacherapp.IncomingCallScreenActivity"
+            android:name="com.hungpham.teacherapp.Sinch.IncomingCallScreenActivity"
             android:noHistory="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.hungpham.teacherapp.PlaceCallActivity"
+            android:name="com.hungpham.teacherapp.Sinch.PlaceCallActivity"
             android:screenOrientation="portrait" />
     </application>
 

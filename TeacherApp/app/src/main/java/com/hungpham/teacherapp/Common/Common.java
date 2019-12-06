@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.hungpham.teacherapp.Model.Tutor;
+import com.hungpham.teacherapp.Model.Entities.Tutor;
 
 public class Common {
   public static Tutor currentUser;

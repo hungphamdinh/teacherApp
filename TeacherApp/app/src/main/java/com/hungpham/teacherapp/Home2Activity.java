@@ -22,11 +22,12 @@ import com.hungpham.teacherapp.Adapter.SectionsPageAdapter;
 import com.hungpham.teacherapp.Common.Common;
 import com.hungpham.teacherapp.Fragment.HomeFragment;
 import com.hungpham.teacherapp.Fragment.Tab3Fragment;
-import com.hungpham.teacherapp.Fragment.MyCourseFragment;
+import com.hungpham.teacherapp.View.MyCourseList.MyCourseFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.hungpham.teacherapp.View.LoginActivity2;
 
 import java.util.HashMap;
 

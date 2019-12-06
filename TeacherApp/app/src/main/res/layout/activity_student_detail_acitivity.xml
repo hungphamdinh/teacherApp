@@ -7,7 +7,7 @@
     android:background="#fff"
     android:orientation="vertical"
     android:weightSum="10"
-    tools:context=".StudentDetailActivity"
+    tools:context=".View.LoadDetailMyCourse.StudentDetailActivity"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16dp"
-                android:text="Thông tin người học"
+                android:text="Thông tin giảng viên"
                 />
             <androidx.cardview.widget.CardView
                 android:layout_marginTop="20dp"
@@ -70,7 +70,7 @@
                             <de.hdodenhof.circleimageview.CircleImageView
                                 android:layout_gravity="end"
                                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                                android:id="@+id/imgProfile"
+                                android:id="@+id/imgProfileDetail"
                                 android:layout_width="50dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginLeft="5dp"
@@ -84,13 +84,13 @@
                                 android:layout_gravity="end|right|bottom"
                                 android:layout_width="15dp"
                                 android:layout_marginTop="10dp"
-                                android:layout_below="@id/imgProfile"
+                                android:layout_below="@id/imgProfileDetail"
                                 android:layout_height="15dp"
                                 android:src="@mipmap/ic_launcher"
                                 app:civ_border_width="10dp"
                                 app:civ_border_color="#05df29"
-                                android:layout_toRightOf="@id/imgProfile"
-                                android:layout_toEndOf="@id/imgProfile"
+                                android:layout_toRightOf="@id/imgProfileDetail"
+                                android:layout_toEndOf="@id/imgProfileDetail"
                                 />
                         </FrameLayout>
 
@@ -138,8 +138,8 @@
                                 android:layout_height="wrap_content"
                                 android:id="@+id/txtTutorStatusDe"
                                 android:textStyle="italic"
-                                android:text=""
-                                android:textColor="#666666"
+                                android:text="Address"
+                                android:textColor="#FF0000"
                                 android:layout_marginTop="6dp"
 
                                 />
@@ -165,8 +165,6 @@
                     android:layout_height="wrap_content"
                     android:background="#fff"
                     android:orientation="vertical">
-
-
                     <TextView
                         android:layout_width="match_parent"
                         android:padding="5dp"
@@ -177,28 +175,13 @@
                         android:layout_marginTop="6dp"
                         android:textColor="#fff"
                         />
-                    <LinearLayout
+                    <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="left|center"
-                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/listDoc"
                         >
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:background="@drawable/doc"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/txtCourseDocDetail"
-                            android:textStyle="italic"
-                            android:text="4543534"
-                            android:textColor="#666666"
-                            android:textSize="16dp"
-                            android:background="#fff"
-                            />
-                    </LinearLayout>
+                    </androidx.recyclerview.widget.RecyclerView>
 
 
                 </LinearLayout>

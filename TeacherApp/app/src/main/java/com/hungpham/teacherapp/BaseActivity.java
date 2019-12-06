@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
+import com.hungpham.teacherapp.Sinch.SinchService;
+
 public abstract class BaseActivity extends Activity implements ServiceConnection {
 
     private SinchService.SinchServiceInterface mSinchServiceInterface;

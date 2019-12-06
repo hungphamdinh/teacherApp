@@ -1,4 +1,4 @@
-package com.hungpham.teacherapp.Fragment;
+package com.hungpham.teacherapp.View.MyCourseList;
 
 
 import android.content.Context;
@@ -14,8 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hungpham.teacherapp.Adapter.StaffAdapter;
-import com.hungpham.teacherapp.Model.Course;
+import com.hungpham.teacherapp.Model.Entities.Course;
+import com.hungpham.teacherapp.Presenter.MyCourseList.MyCourseListAdapterPre;
 import com.hungpham.teacherapp.R;
+import com.hungpham.teacherapp.View.MyCourseList.IMyCourseAdapterView;
 import com.hungpham.teacherapp.ViewHolder.StaffViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -30,7 +32,7 @@ import java.util.ArrayList;
  * Created by User on 2/28/2017.
  */
 
-public class MyCourseFragment extends Fragment {
+public class MyCourseFragment extends Fragment implements IMyCourseAdapterView {
     private Context context;
     private String userPhone;
     public MyCourseFragment(){}
@@ -43,6 +45,7 @@ public class MyCourseFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private DatabaseReference courseRef;
     private FirebaseDatabase database;
+    private MyCourseListAdapterPre myCourseListAdapterPre;
     private FirebaseRecyclerAdapter<Course, StaffViewHolder> adapter;
     private StaffAdapter staffAdapter;
     private ArrayList<Course> courseList;
@@ -56,33 +59,16 @@ public class MyCourseFragment extends Fragment {
         recyclerMenu.setHasFixedSize(true);
         layoutManager= new LinearLayoutManager(getContext());
         recyclerMenu.setLayoutManager(layoutManager);
+        myCourseListAdapterPre=new MyCourseListAdapterPre(this);
+        myCourseListAdapterPre.setAdapter(userPhone);
         //loadListTutor();
-        loadTutor();
         return view;
     }
 
-    private void loadTutor(){
-        courseRef.orderByChild("tutorPhone").equalTo(userPhone).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                courseList=new ArrayList<>();
-                for(DataSnapshot childSnap:dataSnapshot.getChildren()){
-                    Course courseCk=childSnap.getValue(Course.class);
-                    if(courseCk.getIsBuy().equals("true")){
-                        courseList.add(courseCk);
-                        staffAdapter=new StaffAdapter(context,courseList,userPhone);
-                        staffAdapter.notifyDataSetChanged();
-                        recyclerMenu.setAdapter(staffAdapter);
-                    }
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+    @Override
+    public void callAdapter(ArrayList<Course> courses) {
+        staffAdapter=new StaffAdapter(context,courses,userPhone);
+        staffAdapter.notifyDataSetChanged();
+        recyclerMenu.setAdapter(staffAdapter);
     }
-
 }

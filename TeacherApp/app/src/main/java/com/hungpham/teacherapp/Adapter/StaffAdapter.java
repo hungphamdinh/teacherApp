@@ -17,34 +17,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.hungpham.teacherapp.Common.Common;
 import com.hungpham.teacherapp.Interface.ItemClickListener;
-import com.hungpham.teacherapp.Model.Course;
-import com.hungpham.teacherapp.Model.Request;
-import com.hungpham.teacherapp.Model.Tutor;
-import com.hungpham.teacherapp.Model.User;
+import com.hungpham.teacherapp.Model.Entities.Course;
+import com.hungpham.teacherapp.Presenter.MyCourseList.MyCourseListPresenter;
 import com.hungpham.teacherapp.R;
-import com.hungpham.teacherapp.StudentDetailActivity;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
+import com.hungpham.teacherapp.View.LoadDetailMyCourse.StudentDetailActivity;
+import com.hungpham.teacherapp.View.MyCourseList.IMyListCourseView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHolder>  {
+public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHolder>implements IMyListCourseView {
     private Context context;
     private ArrayList<Course> course;
-    public static final int MSG_LEFT = 0;
-    public DatabaseReference courseRef;
-    public FirebaseDatabase database;
-    private String userId;
-    public static final int MSG_RIGHT = 1;
     private String userPhone;
-    //private String imgUrl;
+    private MyCourseListPresenter myCourseListPresenter;
     public StaffAdapter(Context context, ArrayList<Course> course,String userPhone) {
         this.context = context;
         this.course = course;
@@ -65,115 +54,67 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
 
     @Override
     public void onBindViewHolder(@NonNull StaffViewHolder holder, int position) {
+        myCourseListPresenter=new MyCourseListPresenter(this,holder);
         holder.txtCourseName.setText(course.get(position).getCourseName());
         holder.txtSchedule.setText(course.get(position).getSchedule());
-        Glide.with(context)
+        Glide.with(context.getApplicationContext())
                 .load(course.get(position).getImage())
                 .centerCrop()
                 // .placeholder(R.drawable.loading_spinner)
                 .into(holder.image);
-        DatabaseReference coureRef=FirebaseDatabase.getInstance().getReference("Course");
-        coureRef.orderByChild("tutorPhone").equalTo(course.get(position).getTutorPhone()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot courseSnapshot:dataSnapshot.getChildren()){
-                    String key=courseSnapshot.getKey();
-                    checkRequest(key,holder);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        myCourseListPresenter.setCourseList(position,userPhone);
     }
-
 
     @Override
     public int getItemCount() {
         return course.size();
     }
-    private void checkRequest(String courseID, StaffViewHolder viewHolder){
-        DatabaseReference requestRef=FirebaseDatabase.getInstance().getReference("Requests");
-        requestRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot childRequest:dataSnapshot.getChildren()){
-                    Request request=childRequest.getValue(Request.class);
-                    if(request.getCourseId().equals(courseID)){
-                        loadStudent(request.getPhone(),viewHolder);
-                        onClickItem(request, viewHolder);
-                    }
-                }
 
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+    @Override
+    public void onDisplayStudent(HashMap<String, Object> map, StaffViewHolder holder) {
+        holder.txtName.setText(map.get("studentName").toString());
+        holder.txtEmail.setText(map.get("studentMail").toString());
+        Glide.with(context.getApplicationContext())
+                .load(map.get("studentImage"))
+                .centerCrop()
+                // .placeholder(R.drawable.loading_spinner)
+                .into(holder.profileImage);
+
     }
-    private void loadStudent(String studentPhone, StaffViewHolder viewHolder){
-        DatabaseReference studentRef=FirebaseDatabase.getInstance().getReference("User");
-        studentRef.child(studentPhone).addValueEventListener(new ValueEventListener() {
+
+    @Override
+    public void onDisplayCourse(HashMap<String, Object> map, StaffViewHolder holder) {
+
+    }
+
+    @Override
+    public void onDisplayOnline(String msg, StaffViewHolder holder) {
+        holder.txtStatus.setText("Học viên hiện đang hoạt động");
+        holder.txtStatus.setTextColor(Color.parseColor(	"#00FF00"));
+        holder.imgStatus.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onDisplayOffline(String msg, StaffViewHolder holder) {
+        holder.txtStatus.setText("Học viên hiện không hoạt động");
+        holder.txtStatus.setTextColor(Color.parseColor("#FF0000"));
+        holder.imgStatus.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onLoadDataToClick(ArrayList<String> dataList, StaffViewHolder holder) {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User student=dataSnapshot.getValue(User.class);
-                if(student.getStatus().equals("offline")){
-                    viewHolder.txtStatus.setText("Học viên hiện không hoạt động");
-                    viewHolder.txtStatus.setTextColor(Color.parseColor("#FF0000"));
-                    viewHolder.imgStatus.setVisibility(View.INVISIBLE);
-                }
-                else {
-                    viewHolder.txtStatus.setText("Học viên hiện đang hoạt động");
-                    viewHolder.txtStatus.setTextColor(Color.parseColor(	"#00FF00"));
-                    viewHolder.imgStatus.setVisibility(View.VISIBLE);
-                }
-                viewHolder.txtName.setText(student.getUsername());
-                viewHolder.txtEmail.setText(student.getEmail());
-                Glide.with(context.getApplicationContext())
-                        .load(student.getAvatar())
-                        .centerCrop()
-                       // .placeholder(R.drawable.loading_spinner)
-                        .into(viewHolder.profileImage);
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
+            public void onClick(View v) {
+                Intent intent=new Intent(context,StudentDetailActivity.class);
+                intent.putExtra("ChatId",dataList);
+                context.startActivity(intent);
             }
         });
     }
-    public class ChatViewHolder extends RecyclerView.ViewHolder {
-        public TextView showMessage;
-        public ImageView profileImage;
 
-        public ChatViewHolder(@NonNull View itemView) {
-            super(itemView);
-            showMessage = (TextView) itemView.findViewById(R.id.showMessage);
-            profileImage = (ImageView) itemView.findViewById(R.id.profileImage);
-        }
-    }
-    private void onClickItem(Request request, StaffViewHolder viewHolder) {
-        viewHolder.setItemClickListener(new ItemClickListener() {
-            @Override
-            public void onClick(View view, int position, boolean isLongClick) {
-                Intent intent=new Intent(context, StudentDetailActivity.class);
-                String studentID=request.getPhone();
-                String userID=userPhone;
-                ArrayList<String> listIntent=new ArrayList<>();
-                listIntent.add(studentID);
-                listIntent.add(userID);
-                listIntent.add(request.getCourseId());
-                intent.putStringArrayListExtra("ChatID",listIntent);
-                //intent.putExtra("tutorID",adapter.getRef(position).getKey());
-               context.startActivity(intent);                    }
-        });
-    }
     public class StaffViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
         public TextView txtName, txtCourseName, txtStatus, txtEmail, txtSchedule;
         private ItemClickListener itemClickListener;

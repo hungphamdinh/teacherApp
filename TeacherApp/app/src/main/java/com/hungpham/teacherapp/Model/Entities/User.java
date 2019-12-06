@@ -1,4 +1,4 @@
-package com.hungpham.teacherapp.Model;
+package com.hungpham.teacherapp.Model.Entities;
 
 public class User {
     private String username;

@@ -1,4 +1,4 @@
-package com.hungpham.teacherapp;
+package com.hungpham.teacherapp.Sinch;
 
 import android.Manifest;
 import android.app.Service;

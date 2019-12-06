@@ -1,4 +1,4 @@
-package com.hungpham.teacherapp.Model;
+package com.hungpham.teacherapp.Model.Entities;
 
 public class Order {
     private String CourseId;
