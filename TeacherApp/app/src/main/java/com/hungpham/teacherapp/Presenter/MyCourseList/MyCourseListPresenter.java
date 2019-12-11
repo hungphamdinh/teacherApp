@@ -2,8 +2,6 @@ package com.hungpham.teacherapp.Presenter.MyCourseList;
 
 import com.hungpham.teacherapp.Adapter.StaffAdapter;
 import com.hungpham.teacherapp.Model.Entities.Course;
-import com.hungpham.teacherapp.Model.MyCourseList.IMyCourseListListener;
-import com.hungpham.teacherapp.Model.MyCourseList.MyCourseList;
 import com.hungpham.teacherapp.View.MyCourseList.IMyListCourseView;
 
 import java.util.ArrayList;
@@ -27,6 +25,7 @@ public class MyCourseListPresenter implements IMyCourseListListener {
         posMap.put("userId",userId);
         mainInterator.loadCourse(tutorMap,posMap);
     }
+
 
 
     @Override

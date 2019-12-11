@@ -1,6 +1,5 @@
 package com.hungpham.teacherapp.Notification;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,12 +8,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
 
 import androidx.core.app.NotificationCompat;
 
-import com.hungpham.teacherapp.MainChatActivity;
+import com.hungpham.teacherapp.View.Chat.MainChatActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -84,7 +81,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                         ArrayList<String>chatList=new ArrayList<>();
                         chatList.add(user);
                         chatList.add(keyUser);
-                        intent.putStringArrayListExtra("ChatID",chatList);
+                        intent.putStringArrayListExtra("ChatId",chatList);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         PendingIntent pendingIntent = PendingIntent.getActivity(MyFirebaseMessaging.this, j, intent, PendingIntent.FLAG_ONE_SHOT);
                         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

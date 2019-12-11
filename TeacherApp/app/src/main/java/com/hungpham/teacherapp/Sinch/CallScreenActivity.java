@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hungpham.teacherapp.BaseActivity;
 import com.hungpham.teacherapp.R;
 import com.sinch.android.rtc.AudioController;
 import com.sinch.android.rtc.PushPair;

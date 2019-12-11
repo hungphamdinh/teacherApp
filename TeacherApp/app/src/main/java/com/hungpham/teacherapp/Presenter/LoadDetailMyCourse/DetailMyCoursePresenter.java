@@ -2,8 +2,6 @@ package com.hungpham.teacherapp.Presenter.LoadDetailMyCourse;
 
 
 import com.hungpham.teacherapp.Model.Entities.Doc;
-import com.hungpham.teacherapp.Model.LoadDetailMyCourse.ILoadMyCourseListener;
-import com.hungpham.teacherapp.Model.LoadDetailMyCourse.LoadMyCourse;
 import com.hungpham.teacherapp.View.LoadDetailMyCourse.ILoadDetailMyCourseView;
 
 import java.util.ArrayList;
@@ -21,11 +19,17 @@ public class DetailMyCoursePresenter implements ILoadMyCourseListener,IDetailMyC
         HashMap<String,Object>tutorMap=new HashMap<>();
         mainInterator.getDetailStudent(studentId,tutorMap);
         mainInterator.loadCourseDoc(courseId);
+        mainInterator.loadTutorTest(courseId);
     }
     public void setToken(String token,String userId){
         mainInterator.updateToken(userId,token);
     }
-
+    public void addTest(String courseId,HashMap<String,Object>edtMap){
+        mainInterator.addTest(courseId,edtMap);
+    }
+    public void setStatus(String status,String phoneKey){
+        mainInterator.setStatus(status,phoneKey);
+    }
     @Override
     public void onLoadTutorMyCourse(HashMap<String, Object> studentMap) {
         loadView.onDisplayStudent(studentMap);
@@ -35,6 +39,12 @@ public class DetailMyCoursePresenter implements ILoadMyCourseListener,IDetailMyC
     public void onLoadDocMyCourse(ArrayList<Doc> docList) {
         loadView.onDisplayDoc(docList);
     }
+
+    @Override
+    public void onLoadTutorTest(ArrayList<Doc> docArrayList, ArrayList<String> key) {
+        loadView.onDisplayTutorTest(docArrayList,key);
+    }
+
 
     @Override
     public void offlineStatus(String msg) {
@@ -50,4 +60,16 @@ public class DetailMyCoursePresenter implements ILoadMyCourseListener,IDetailMyC
     public void updateToken(String msg) {
         loadView.onUpdateToken(msg);
     }
+
+    @Override
+    public void addTestSuccess(String msg) {
+        loadView.onAddTestSuccess(msg);
+    }
+
+    @Override
+    public void addTestFailed(String msg) {
+        loadView.onAddTestFailed(msg);
+    }
+
+
 }

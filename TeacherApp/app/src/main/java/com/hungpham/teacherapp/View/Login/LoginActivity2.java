@@ -1,4 +1,4 @@
-package com.hungpham.teacherapp.View;
+package com.hungpham.teacherapp.View.Login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hungpham.teacherapp.BaseActivity;
+import com.hungpham.teacherapp.Sinch.BaseActivity;
 import com.hungpham.teacherapp.Home2Activity;
 import com.hungpham.teacherapp.Presenter.Login.ILoginPresenter;
 import com.hungpham.teacherapp.Presenter.Login.LoginPresenter;

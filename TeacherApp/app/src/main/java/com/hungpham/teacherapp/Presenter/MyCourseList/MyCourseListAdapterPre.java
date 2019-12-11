@@ -2,9 +2,6 @@ package com.hungpham.teacherapp.Presenter.MyCourseList;
 
 
 import com.hungpham.teacherapp.Model.Entities.Course;
-import com.hungpham.teacherapp.Model.Entities.Request;
-import com.hungpham.teacherapp.Model.MyCourseList.IMyCourseListAdaperListener;
-import com.hungpham.teacherapp.Model.MyCourseList.MyCourseListCallAdapter;
 import com.hungpham.teacherapp.View.MyCourseList.IMyCourseAdapterView;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.hungpham.teacherapp.Model.MyCourseList;
+package com.hungpham.teacherapp.Presenter.MyCourseList;
 
 
 import com.hungpham.teacherapp.Model.Entities.Course;

@@ -1,4 +1,4 @@
-package com.hungpham.teacherapp.Model.Chat;
+package com.hungpham.teacherapp.Presenter.Chat;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,7 +33,7 @@ public class UserChat {
                 notify=true;
                 String msg=msgMap.get("msg").toString();
                 String userId=msgMap.get("userId").toString();
-                String tutorId=msgMap.get("tutorId").toString();
+                String tutorId=msgMap.get("studentId").toString();
                 if(!msg.equals("")) {
                     sendMessage(msgMap);
                     chatListener.onClickSendMsg(msgMap);
@@ -47,7 +47,7 @@ public class UserChat {
     private void sendMessage(HashMap<String,Object>msgMap){
         String message=msgMap.get("msg").toString();
         String sender=msgMap.get("userId").toString();
-        String reciever=msgMap.get("tutorId").toString();
+        String reciever=msgMap.get("studentId").toString();
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference();
         HashMap<Object,Object> hashMap=new HashMap<>();
         hashMap.put("sender",sender);
@@ -163,5 +163,11 @@ public class UserChat {
 
             }
         });
+    }
+    public void  setStatus(String status,String userPhone){
+        HashMap<String,Object>map=new HashMap<>();
+        map.put("status",status);
+        DatabaseReference userRef=FirebaseDatabase.getInstance().getReference("Tutor");
+        userRef.child(userPhone).updateChildren(map);
     }
 }

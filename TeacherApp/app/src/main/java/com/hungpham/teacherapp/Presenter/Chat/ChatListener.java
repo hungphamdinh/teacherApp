@@ -1,4 +1,4 @@
-package com.hungpham.teacherapp.Model.Chat;
+package com.hungpham.teacherapp.Presenter.Chat;
 
 
 import com.hungpham.teacherapp.Model.Entities.Chat;

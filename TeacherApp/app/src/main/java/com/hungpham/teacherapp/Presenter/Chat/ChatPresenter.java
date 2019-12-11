@@ -1,7 +1,5 @@
 package com.hungpham.teacherapp.Presenter.Chat;
 
-import com.hungpham.teacherapp.Model.Chat.ChatListener;
-import com.hungpham.teacherapp.Model.Chat.UserChat;
 import com.hungpham.teacherapp.Model.Entities.Chat;
 import com.hungpham.teacherapp.View.Chat.IUserChatView;
 
@@ -21,6 +19,9 @@ public class ChatPresenter implements ChatListener {
     }
     public void clickSend(HashMap<String,Object>sendMap){
         userChat.onClickSend(sendMap);
+    }
+    public void setStatus(String status,String phoneKey){
+        userChat.setStatus(status,phoneKey);
     }
     @Override
     public void onClickSendMsg(HashMap<String, Object> msgMap) {

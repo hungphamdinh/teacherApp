@@ -27,7 +27,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.hungpham.teacherapp.View.LoginActivity2;
+import com.hungpham.teacherapp.View.Login.LoginActivity2;
 
 import java.util.HashMap;
 

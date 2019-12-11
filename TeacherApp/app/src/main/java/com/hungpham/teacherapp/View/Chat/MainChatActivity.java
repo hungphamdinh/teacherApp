@@ -1,4 +1,4 @@
-package com.hungpham.teacherapp;
+package com.hungpham.teacherapp.View.Chat;
 
 
 import android.os.Bundle;
@@ -18,7 +18,7 @@ import com.hungpham.teacherapp.Adapter.MessageAdapter;
 import com.hungpham.teacherapp.Common.Common;
 import com.hungpham.teacherapp.Model.Entities.Chat;
 import com.hungpham.teacherapp.Presenter.Chat.ChatPresenter;
-import com.hungpham.teacherapp.View.Chat.IUserChatView;
+import com.hungpham.teacherapp.R;
 
 
 import java.util.ArrayList;
@@ -84,22 +84,16 @@ public class MainChatActivity extends AppCompatActivity implements IUserChatView
         super.onStart();
 
     }
-    private void setStatus(String status){
-        HashMap<String,Object>map=new HashMap<>();
-        map.put("status",status);
-        DatabaseReference userRef=FirebaseDatabase.getInstance().getReference("User");
-        userRef.child(userId).updateChildren(map);
-    }
     @Override
     protected void onResume() {
         super.onResume();
-        setStatus("online");
+        chatPresenter.setStatus("online",userId);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        setStatus("offline");
+        chatPresenter.setStatus("offline",userId);
     }
 
     @Override

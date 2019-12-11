@@ -2,9 +2,7 @@ package com.hungpham.teacherapp.Presenter.Login;
 
 import android.content.Context;
 
-import com.hungpham.teacherapp.Model.Login.IUserLoginListener;
-import com.hungpham.teacherapp.Model.Login.UserLogin;
-import com.hungpham.teacherapp.View.ILoginView;
+import com.hungpham.teacherapp.View.Login.ILoginView;
 
 
 public class LoginPresenter implements  ILoginPresenter, IUserLoginListener {

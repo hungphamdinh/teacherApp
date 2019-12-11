@@ -1,9 +1,14 @@
 package com.hungpham.teacherapp.View.LoadDetailMyCourse;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,9 +21,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.hungpham.teacherapp.Adapter.DocAdapter;
-import com.hungpham.teacherapp.BaseActivity;
+import com.hungpham.teacherapp.Adapter.TestAdapter;
+import com.hungpham.teacherapp.Sinch.BaseActivity;
 import com.hungpham.teacherapp.Common.Common;
-import com.hungpham.teacherapp.MainChatActivity;
+import com.hungpham.teacherapp.View.Chat.MainChatActivity;
 import com.hungpham.teacherapp.Model.Entities.Doc;
 import com.hungpham.teacherapp.Presenter.LoadDetailMyCourse.DetailMyCoursePresenter;
 import com.hungpham.teacherapp.R;
@@ -34,15 +40,20 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class StudentDetailActivity extends BaseActivity implements ILoadDetailMyCourseView {
     private TextView txtUsername,txtTitle,txtStatus,txtEmail,txtExp,txtCourseDoc;
     private String tutorId;
+    private ImageView imgBtnAddTest;
     private String userId;
     private String courseId;
     private CircleImageView profileImage,imgStatus;
     private Button btnChat;
     private Button btnCall;
     private RecyclerView recyclerMenu;
+    private RecyclerView testList;
+    private AlertDialog.Builder alertDialog;
     private RecyclerView.LayoutManager layoutManager;
     private DocAdapter docAdapter;
+    private TestAdapter testAdapter;
     private ArrayList<String> listChatID;
+    private   DetailMyCoursePresenter detailMyCoursePresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,13 +65,17 @@ public class StudentDetailActivity extends BaseActivity implements ILoadDetailMy
        // txtExp=(TextView)findViewById(R.id.txtExpTutor);
         imgStatus=(CircleImageView)findViewById(R.id.imgStatusTutorDe);
         recyclerMenu = (RecyclerView) findViewById(R.id.listDoc);
+        testList=(RecyclerView)findViewById(R.id.listTest);
         recyclerMenu.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerMenu.setLayoutManager(layoutManager);
+        testList.setHasFixedSize(true);
+        testList.setLayoutManager(new LinearLayoutManager(this));
         profileImage=(CircleImageView)findViewById(R.id.imgProfileDetail);
         btnChat=(Button)findViewById(R.id.btnMessage);
         btnCall=(Button)findViewById(R.id.btnCallTutor);
-        DetailMyCoursePresenter detailMyCoursePresenter=new DetailMyCoursePresenter(this);
+        imgBtnAddTest=(ImageView)findViewById(R.id.imgBtnAddTest);
+        detailMyCoursePresenter=new DetailMyCoursePresenter(this);
         if (getIntent() != null)
             listChatID = getIntent().getStringArrayListExtra("ChatId");
         if (!listChatID.isEmpty() && listChatID != null) {
@@ -75,9 +90,21 @@ public class StudentDetailActivity extends BaseActivity implements ILoadDetailMy
                 return;
             }
         }
+        callDialog();
         onClickChat();
         onClickCall();
     }
+
+    private void callDialog() {
+        imgBtnAddTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HashMap<String,Object> edtHashMap=new HashMap<>();
+                alertDialog=showUpdateDialog(edtHashMap);
+            }
+        });
+    }
+
     private void onClickCall() {
         btnCall.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,13 +136,6 @@ public class StudentDetailActivity extends BaseActivity implements ILoadDetailMy
         callScreen.putExtra(SinchService.CALL_ID, callId);
         startActivity(callScreen);
     }
-
-    private void setStatus(String status){
-        HashMap<String,Object>map=new HashMap<>();
-        map.put("status",status);
-        DatabaseReference userRef=FirebaseDatabase.getInstance().getReference("Tutor");
-        userRef.child(userId).updateChildren(map);
-    }
     @Override
     protected void onServiceConnected() {
 
@@ -130,13 +150,13 @@ public class StudentDetailActivity extends BaseActivity implements ILoadDetailMy
     @Override
     protected void onResume() {
         super.onResume();
-        setStatus("online");
+        detailMyCoursePresenter.setStatus("online",userId);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        setStatus("offline");
+        detailMyCoursePresenter.setStatus("offline",userId);
     }
 
     @Override
@@ -152,9 +172,20 @@ public class StudentDetailActivity extends BaseActivity implements ILoadDetailMy
 
     @Override
     public void onDisplayDoc(ArrayList<Doc> docList) {
-        docAdapter=new DocAdapter(StudentDetailActivity.this,docList);
+        docAdapter =new DocAdapter(StudentDetailActivity.this,docList);
         docAdapter.notifyDataSetChanged();
         recyclerMenu.setAdapter(docAdapter);
+    }
+
+    @Override
+    public void onDisplayTutorTest(ArrayList<Doc> docArrayList, ArrayList<String> docKey) {
+        testAdapter=new TestAdapter(StudentDetailActivity.this,docArrayList,docKey);
+        testAdapter.notifyDataSetChanged();
+        if(docArrayList.size()==0){
+            testList.setVisibility(View.INVISIBLE);
+        }
+        testList.setAdapter(testAdapter);
+
     }
 
     @Override
@@ -175,4 +206,45 @@ public class StudentDetailActivity extends BaseActivity implements ILoadDetailMy
     public void onUpdateToken(String msg) {
         Toast.makeText(StudentDetailActivity.this,msg,Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onAddTestSuccess(String msg) {
+        Toast.makeText(StudentDetailActivity.this,msg,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onAddTestFailed(String msg) {
+        Toast.makeText(StudentDetailActivity.this,msg,Toast.LENGTH_SHORT).show();
+    }
+
+    private AlertDialog.Builder showUpdateDialog(HashMap<String,Object>edtMap) {
+        LayoutInflater inflater=this.getLayoutInflater();
+        View subView=inflater.inflate(R.layout.alert_dialog_add_test,null);
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Cập nhật");
+        alertDialog.setMessage("Xin hãy điền thông tin");
+        //alertDialog.create();
+        final EditText name=(EditText) subView.findViewById(R.id.edtNameTestUp);
+        final EditText url=(EditText) subView.findViewById(R.id.edtUrlTestUp);
+
+        alertDialog.setView(subView);
+        //alertDialog.show();
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                edtMap.put("docName",name.getText().toString());
+                edtMap.put("docUrl",url.getText().toString());
+                detailMyCoursePresenter.addTest(courseId,edtMap);
+                dialogInterface.dismiss();
+            }
+        });
+        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });        alertDialog.show();
+        return alertDialog;
+    }
+
 }

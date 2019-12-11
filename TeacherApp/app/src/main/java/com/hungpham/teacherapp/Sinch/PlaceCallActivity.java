@@ -10,7 +10,6 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hungpham.teacherapp.BaseActivity;
 import com.hungpham.teacherapp.Interface.ItemClickListener;
 import com.hungpham.teacherapp.Model.Entities.User;
 import com.hungpham.teacherapp.R;

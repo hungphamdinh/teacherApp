@@ -1,4 +1,4 @@
-package com.hungpham.teacherapp;
+package com.hungpham.teacherapp.Sinch;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -16,8 +16,6 @@ import android.widget.Toast;
 
 
 import androidx.core.app.ActivityCompat;
-
-import com.hungpham.teacherapp.Sinch.SinchService;
 
 public abstract class BaseActivity extends Activity implements ServiceConnection {
 

@@ -7,7 +7,7 @@
     android:background="@drawable/side_nav_bar"
     android:orientation="vertical"
     android:weightSum="10"
-    tools:context="com.hungpham.teacherapp.MainChatActivity"    >
+    tools:context="com.hungpham.teacherapp.View.Chat.MainChatActivity"    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_weight="2"

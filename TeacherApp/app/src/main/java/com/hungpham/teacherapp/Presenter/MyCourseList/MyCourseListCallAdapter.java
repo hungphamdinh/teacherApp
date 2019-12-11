@@ -1,13 +1,11 @@
-package com.hungpham.teacherapp.Model.MyCourseList;
+package com.hungpham.teacherapp.Presenter.MyCourseList;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.hungpham.teacherapp.Adapter.StaffAdapter;
 import com.hungpham.teacherapp.Model.Entities.Course;
-import com.hungpham.teacherapp.Model.Entities.Request;
 
 import java.util.ArrayList;
 
