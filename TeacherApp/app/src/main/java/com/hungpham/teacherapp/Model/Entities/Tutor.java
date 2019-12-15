@@ -7,6 +7,15 @@ public class Tutor {
     String experience;
     String status;
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    String avatar;
     public String getStatus() {
         return status;
     }

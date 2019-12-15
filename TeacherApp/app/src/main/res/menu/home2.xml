@@ -4,11 +4,11 @@
     <item
         android:id="@+id/refresh"
         android:orderInCategory="100"
-        android:title="Refresh"
+        android:title="Tải lại"
         app:showAsAction="never" />
     <item
         android:id="@+id/accountInform"
         android:orderInCategory="100"
-        android:title="My Account"
+        android:title="Tài khoản của tôi"
         app:showAsAction="never" />
 </menu>

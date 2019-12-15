@@ -7,4 +7,5 @@ import java.util.ArrayList;
 
 public interface IMyCourseListAdaperListener {
     void callAdapter(ArrayList<Course> courses);
+
 }

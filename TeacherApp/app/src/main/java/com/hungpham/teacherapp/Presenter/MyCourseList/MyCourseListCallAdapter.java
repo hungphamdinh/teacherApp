@@ -15,8 +15,8 @@ public class MyCourseListCallAdapter {
         this.myCourseListAdaperListener=myCourseListAdaperListener;
     }
     public void loadTutor(String userPhone){
-        DatabaseReference request= FirebaseDatabase.getInstance().getReference("Course");
-        request.orderByChild("tutorPhone").equalTo(userPhone).addValueEventListener(new ValueEventListener() {
+        DatabaseReference courseRef= FirebaseDatabase.getInstance().getReference("Course");
+        courseRef.orderByChild("tutorPhone").equalTo(userPhone).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<Course>courseList=new ArrayList<>();

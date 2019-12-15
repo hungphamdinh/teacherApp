@@ -1,27 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="8dp"
     android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="300dp"
         android:layout_height="wrap_content">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:id="@+id/profileImage"
-            android:src="@mipmap/ic_launcher"
-            />
-        <TextView
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profileImage"
+                android:layout_width="50dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_height="50dp"
+                app:civ_border_width="1dp"
+                app:civ_border_color="#666666"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/imgStatusChat"
+                android:layout_gravity="end|right|bottom"
+                android:layout_width="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/profileImage"
+                android:layout_height="15dp"
+                app:civ_border_width="10dp"
+                app:civ_border_color="#05df29"
+                android:src="@mipmap/ic_launcher"
+                android:layout_toRightOf="@id/profileImage"
+                android:layout_toEndOf="@id/profileImage"
+                />
+        </FrameLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginLeft="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/profileImage"
-            android:textSize="20dp"
-            android:textColor="#000"
-            android:id="@+id/showMessage"
-            android:text="Hello"
-            android:background="@drawable/background_left"
-            />
+            app:cardUseCompatPadding="true"
+            app:cardElevation="10dp"
+            app:cardCornerRadius="10dp">
+            <TextView
+
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/imgStatusChat"
+                android:textSize="20dp"
+                android:textColor="#fff"
+                android:id="@+id/showMessage"
+                android:text="Hello"
+                android:background="#6666"
+                />
+        </androidx.cardview.widget.CardView>
+
     </RelativeLayout>
 
 </RelativeLayout>

@@ -50,6 +50,7 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
     public void onBindViewHolder(@NonNull TestViewHolder holder, int position) {
 
         holder.txtDocName.setText(doc.get(position).getDocName());
+
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
@@ -61,12 +62,12 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
         holder.imgBtnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteDialog(docKey.get(position));
+                deleteDialog(docKey.get(position),holder);
             }
         });
     }
 
-    private void deleteDialog(final String key) {
+    private void deleteDialog(final String key,TestViewHolder holder) {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
         alertDialog.setTitle("Xóa");
         alertDialog.setMessage("Bạn có chắc muốn xóa?");
@@ -75,10 +76,15 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                DatabaseReference docRef=FirebaseDatabase.getInstance().getReference("Doc");
-                docRef.child(key).removeValue();
-                Toast.makeText(context,"Xóa thành công",Toast.LENGTH_SHORT).show();
-                dialogInterface.dismiss();
+                if(doc.size()==0){
+                    holder.itemView.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    DatabaseReference docRef = FirebaseDatabase.getInstance().getReference("Doc");
+                    docRef.child(key).removeValue();
+                    Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                    dialogInterface.dismiss();
+                }
             }
         });
         alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -97,7 +103,7 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
 
 
     public class TestViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
-        private TextView txtDocName;
+        private TextView txtDocName,txtGoToCreate;
         private ImageView imgBtnDelete;
         private ItemClickListener itemClickListener;
 

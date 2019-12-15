@@ -22,6 +22,7 @@ import com.hungpham.teacherapp.Adapter.SectionsPageAdapter;
 import com.hungpham.teacherapp.Common.Common;
 import com.hungpham.teacherapp.Fragment.HomeFragment;
 import com.hungpham.teacherapp.Fragment.Tab3Fragment;
+import com.hungpham.teacherapp.View.MyAccountView.MyAccountActivity;
 import com.hungpham.teacherapp.View.MyCourseList.MyCourseFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -119,7 +120,9 @@ public class Home2Activity extends AppCompatActivity
         if (id == R.id.refresh) {
             // loadMenu();
         } else if (id == R.id.accountInform) {
-            startActivity(new Intent(Home2Activity.this, MyAccountActivity.class));
+            Intent intent=new Intent(Home2Activity.this, MyAccountActivity.class);
+            intent.putExtra("phoneKey",userPhone);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -180,13 +183,13 @@ public class Home2Activity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        setStatus("online");
+        //setStatus("online");
     }
 
       @Override
     protected void onPause() {
         super.onPause();
-        setStatus("offline");
+        //setStatus("offline");
     }
 
 //    @Override

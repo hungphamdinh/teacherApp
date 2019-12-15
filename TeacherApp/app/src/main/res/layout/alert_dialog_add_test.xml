@@ -27,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edtNameTestUp"
+            android:hint="Test GV/..."
             android:textSize="16dp"
             />
     </LinearLayout>
@@ -47,8 +48,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edtUrlTestUp"
+            android:hint="https://forms.gle/..."
             />
     </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="italic"
+            android:id="@+id/txtCreateTest"
+            android:textSize="16dp"
+            android:text="Đi đến trang web tạo bài test "
+            />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

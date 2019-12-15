@@ -50,6 +50,11 @@ public class MyCourseListPresenter implements IMyCourseListListener {
     }
 
     @Override
+    public void onNullItem(String msg) {
+        courseView.onNullItem(msg,holder);
+    }
+
+    @Override
     public void onLoadDataToClick(ArrayList<String> list) {
         courseView.onLoadDataToClick(list,holder);
     }

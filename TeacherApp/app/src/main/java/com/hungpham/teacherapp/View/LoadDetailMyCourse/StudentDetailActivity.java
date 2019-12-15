@@ -3,6 +3,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -150,13 +151,13 @@ public class StudentDetailActivity extends BaseActivity implements ILoadDetailMy
     @Override
     protected void onResume() {
         super.onResume();
-        detailMyCoursePresenter.setStatus("online",userId);
+        //detailMyCoursePresenter.setStatus("online",userId);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        detailMyCoursePresenter.setStatus("offline",userId);
+        //detailMyCoursePresenter.setStatus("offline",userId);
     }
 
     @Override
@@ -226,7 +227,15 @@ public class StudentDetailActivity extends BaseActivity implements ILoadDetailMy
         //alertDialog.create();
         final EditText name=(EditText) subView.findViewById(R.id.edtNameTestUp);
         final EditText url=(EditText) subView.findViewById(R.id.edtUrlTestUp);
-
+        TextView txtGoToCreate=(TextView)subView.findViewById(R.id.txtCreateTest);
+        txtGoToCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("https://docs.google.com/forms/u/0/");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
         alertDialog.setView(subView);
         //alertDialog.show();
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {

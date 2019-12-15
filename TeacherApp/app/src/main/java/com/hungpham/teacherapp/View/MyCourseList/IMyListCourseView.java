@@ -11,5 +11,6 @@ public interface IMyListCourseView {
     void onDisplayCourse(HashMap<String, Object> map, StaffAdapter.StaffViewHolder holder);
     void onDisplayOnline(String msg, StaffAdapter.StaffViewHolder holder);
     void onDisplayOffline(String msg, StaffAdapter.StaffViewHolder holder);
+    void onNullItem(String msg, StaffAdapter.StaffViewHolder holder);
     void onLoadDataToClick(ArrayList<String> dataList, StaffAdapter.StaffViewHolder holder);
 }

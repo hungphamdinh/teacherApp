@@ -48,9 +48,10 @@
             android:name="com.hungpham.teacherapp.SignUpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.hungpham.teacherapp.MyAccountActivity"
+            android:name="com.hungpham.teacherapp.View.MyAccountView.MyAccountActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:name="com.hungpham.teacherapp.View.Login.LoginActivity2"
             android:screenOrientation="portrait">
             <intent-filter>

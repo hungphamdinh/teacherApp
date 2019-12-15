@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -101,6 +102,12 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
         holder.txtStatus.setText("Học viên hiện không hoạt động");
         holder.txtStatus.setTextColor(Color.parseColor("#FF0000"));
         holder.imgStatus.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onNullItem(String msg, StaffViewHolder holder) {
+        Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
+        holder.itemView.setVisibility(View.GONE);
     }
 
     @Override

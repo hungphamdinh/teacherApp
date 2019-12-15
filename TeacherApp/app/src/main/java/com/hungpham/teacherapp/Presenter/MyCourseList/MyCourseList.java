@@ -25,14 +25,19 @@ public class MyCourseList {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot courseSnapshot:dataSnapshot.getChildren()){
                     Course course=courseSnapshot.getValue(Course.class);
-                    HashMap<String,Object>courseMap=new HashMap<>();
-                    courseMap.put("courseName",course.getCourseName());
-                    courseMap.put("courseSchedule",course.getSchedule());
-                    courseMap.put("courseImage",course.getImage());
-                    String key=courseSnapshot.getKey();
-                    String userId=posMap.get("userId").toString();
-                    myCourseListListener.onLoadCourseMyCourse(courseMap);
-                    checkRequest(key,tutorMap,userId);
+                    if(course.getCourseName().isEmpty()){
+                        myCourseListListener.onNullItem("Khóa học rỗng");
+                    }
+                    else {
+                        HashMap<String, Object> courseMap = new HashMap<>();
+                        courseMap.put("courseName", course.getCourseName());
+                        courseMap.put("courseSchedule", course.getSchedule());
+                        courseMap.put("courseImage", course.getImage());
+                        String key = courseSnapshot.getKey();
+                        String userId = posMap.get("userId").toString();
+                        myCourseListListener.onLoadCourseMyCourse(courseMap);
+                        checkRequest(key, tutorMap, userId);
+                    }
                 }
 
             }

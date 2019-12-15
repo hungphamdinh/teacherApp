@@ -8,5 +8,6 @@ public interface IMyCourseListListener {
     void onLoadCourseMyCourse(HashMap<String, Object> courseMap);
     void offlineStatus(String msg);
     void onlineStatus(String msg);
+    void onNullItem(String msg);
     void onLoadDataToClick(ArrayList<String> list);
 }

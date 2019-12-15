@@ -103,12 +103,16 @@ public class LoadMyCourse {
     }
     public void addTest(String courseId,HashMap<String,Object>edtMap){
         DatabaseReference testRef=FirebaseDatabase.getInstance().getReference("Doc");
+        String formPatter = "https://+forms\\.+gle+/+[a-zA-Z0-9._-]+";
+        //https://docs.google.com/forms/u/0/
+        String formName = "Test GV+/+[a-zA-Z0-9._-]+";
         HashMap<String,Object>dataMap=new HashMap<>();
         dataMap.put("courseId",courseId);
         dataMap.put("docName",edtMap.get("docName"));
         dataMap.put("docUrl",edtMap.get("docUrl"));
         dataMap.put("type","tutorTest");
-        if(edtMap.get("docName").equals("")||edtMap.get("docUrl").equals("")) {
+        if(edtMap.get("docName").equals("")||edtMap.get("docUrl").equals("")||!edtMap.get("docUrl").toString().trim().matches(formPatter)
+                ||!edtMap.get("docName").toString().trim().matches(formName)) {
             loadCourseListener.addTestFailed("Vui lòng kiểm tra lại dữ liệu");
         }
         else {

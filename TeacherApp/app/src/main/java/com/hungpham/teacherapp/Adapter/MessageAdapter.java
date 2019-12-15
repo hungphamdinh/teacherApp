@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.hungpham.teacherapp.Interface.ItemClickListener;
 import com.hungpham.teacherapp.Model.Entities.Chat;
 import com.hungpham.teacherapp.Model.Entities.User;
 import com.hungpham.teacherapp.R;
@@ -75,6 +76,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ChatView
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User tutor=dataSnapshot.getValue(User.class);
+                if(tutor.getStatus().equals("offline")){
+                    holder.status.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    holder.status.setVisibility(View.VISIBLE);
+                }
                 Glide.with(context)
                         .load(tutor.getAvatar())
                         .centerCrop()
@@ -94,14 +101,24 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ChatView
         return chat.size();
     }
 
-    public class ChatViewHolder extends RecyclerView.ViewHolder {
+    public class ChatViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView showMessage;
-        public ImageView profileImage;
-
+        public ImageView profileImage,status;
+        private ItemClickListener itemClickListener;
         public ChatViewHolder(@NonNull View itemView) {
             super(itemView);
             showMessage=(TextView)itemView.findViewById(R.id.showMessage);
             profileImage=(ImageView)itemView.findViewById(R.id.profileImage);
+            status=(ImageView)itemView.findViewById(R.id.imgStatusChat);
+            itemView.setOnClickListener(this);
+        }
+        public void setItemClickListener(ItemClickListener itemClickListener){
+            this.itemClickListener=itemClickListener;
+        }
+
+        @Override
+        public void onClick(View view) {
+            itemClickListener.onClick(view,getAdapterPosition(),false);
         }
     }
 
