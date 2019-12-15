@@ -190,6 +190,12 @@ public class StudentDetailActivity extends BaseActivity implements ILoadDetailMy
     }
 
     @Override
+    public void onNullItem(String msg) {
+        Toast.makeText(StudentDetailActivity.this,msg,Toast.LENGTH_SHORT).show();
+        testList.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
     public void onDisplayOnline(String msg) {
         txtStatus.setText(msg);
         txtStatus.setTextColor(Color.parseColor("#00FF00"));

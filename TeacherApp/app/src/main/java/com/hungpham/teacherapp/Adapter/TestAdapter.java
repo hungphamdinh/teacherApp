@@ -17,8 +17,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hungpham.teacherapp.Common.Common;
 import com.hungpham.teacherapp.Interface.ItemClickListener;
 import com.hungpham.teacherapp.Model.Entities.Doc;
@@ -76,15 +79,27 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if(doc.size()==0){
-                    holder.itemView.setVisibility(View.INVISIBLE);
-                }
-                else {
                     DatabaseReference docRef = FirebaseDatabase.getInstance().getReference("Doc");
-                    docRef.child(key).removeValue();
-                    Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
-                    dialogInterface.dismiss();
-                }
+                    docRef.child(key).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Doc doc=dataSnapshot.getValue(Doc.class);
+                            if(doc==null){
+                                holder.itemView.setVisibility(View.GONE);
+                            }
+                            else {
+                                docRef.child(key).removeValue();
+                                Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                                dialogInterface.dismiss();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
             }
         });
         alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {

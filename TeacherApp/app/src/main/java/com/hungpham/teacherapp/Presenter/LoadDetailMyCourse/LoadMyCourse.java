@@ -56,9 +56,14 @@ public class LoadMyCourse {
                 docList.clear();
                 for (DataSnapshot childSnap:dataSnapshot.getChildren()) {
                     Doc doc = childSnap.getValue(Doc.class);
-                    if(doc.getType().compareTo("tutorTest")!=0) {
-                        docList.add(doc);
-                        loadCourseListener.onLoadDocMyCourse(docList);
+                    if(doc==null){
+                        loadCourseListener.onNullItem("Không có bài test");
+                    }
+                    else {
+                        if (doc.getType().compareTo("tutorTest") != 0) {
+                            docList.add(doc);
+                            loadCourseListener.onLoadDocMyCourse(docList);
+                        }
                     }
                 }
             }

@@ -13,6 +13,7 @@ public interface ILoadMyCourseListener {
     void offlineStatus(String msg);
     void onlineStatus(String msg);
     void updateToken(String msg);
+    void onNullItem(String msg);
     void addTestSuccess(String msg);
     void addTestFailed(String msg);
 }

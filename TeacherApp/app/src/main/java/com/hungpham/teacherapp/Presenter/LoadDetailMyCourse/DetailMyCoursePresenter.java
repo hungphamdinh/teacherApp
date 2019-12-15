@@ -62,6 +62,11 @@ public class DetailMyCoursePresenter implements ILoadMyCourseListener,IDetailMyC
     }
 
     @Override
+    public void onNullItem(String msg) {
+        loadView.onNullItem(msg);
+    }
+
+    @Override
     public void addTestSuccess(String msg) {
         loadView.onAddTestSuccess(msg);
     }
