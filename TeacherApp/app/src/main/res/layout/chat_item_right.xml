@@ -3,11 +3,15 @@
     android:layout_width="match_parent"
     android:padding="8dp"
     android:layout_height="wrap_content">
-    <RelativeLayout
-
+    <LinearLayout
         android:layout_width="300dp"
         android:orientation="horizontal"
+        android:weightSum="10"
         android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7.5">
         <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profileImage"
@@ -33,21 +37,37 @@
             android:layout_toRightOf="@id/profileImage"
             android:layout_toEndOf="@id/profileImage"
             />
-
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2.5"
+        android:orientation="vertical"
+        >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textFontWeight="bold"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="5dp"
             android:id="@+id/showMessage"
             android:text="Hello"
             android:padding="8dp"
             android:textSize="20dp"
             android:background="@drawable/background_right"
             />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đã xem"
+            android:id="@+id/txtSeen"
+            android:textSize="16dp"
+            android:visibility="gone"
+            android:textColor="#fff"
+            android:layout_below="@id/showMessage"
+            />
+    </LinearLayout>
 
-    </RelativeLayout>
+
+
+    </LinearLayout>
 
 </RelativeLayout>

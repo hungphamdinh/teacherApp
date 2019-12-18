@@ -33,10 +33,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ChatView
     public FirebaseDatabase database;
     private HashMap<String,Object> id;
     public static final int MSG_RIGHT=1;
-    public MessageAdapter(Context context, ArrayList<Chat> chat, HashMap<String,Object>id) {
+    public ArrayList<String>keys;
+    public MessageAdapter(Context context, ArrayList<Chat> chat, HashMap<String,Object>id,ArrayList<String>keys) {
         this.context = context;
         this.chat = chat;
         this.id=id;
+        this.keys=keys;
     }
     public MessageAdapter(){
 
@@ -54,7 +56,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ChatView
             return new MessageAdapter.ChatViewHolder(view);
         }
     }
-
     @Override
     public int getItemViewType(int position) {
         database = FirebaseDatabase.getInstance();
@@ -66,12 +67,29 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ChatView
             return MSG_LEFT;
         }
     }
-
     @Override
     public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
         Chat chatItem=chat.get(position);
         holder.showMessage.setText(chatItem.getMessage());
-        DatabaseReference receiverRef=FirebaseDatabase.getInstance().getReference("User");
+        if(chatItem.getReciever().equals(id.get("userId"))&&chatItem.getSender().equals(id.get("studentId"))){
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("seen", true);
+            chatRef.child(keys.get(position)).updateChildren(map);
+
+        }
+        if(chatItem.isSeen()==true) {
+            holder.seen.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.seen.setVisibility(View.GONE);
+        }
+
+        loadData(holder);
+        //onCheckSeen(holder);
+    }
+
+    private void loadData(@NonNull ChatViewHolder holder) {
+        DatabaseReference receiverRef= FirebaseDatabase.getInstance().getReference("User");
         receiverRef.child(id.get("studentId").toString()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -95,7 +113,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ChatView
             }
         });
     }
-
     @Override
     public int getItemCount() {
         return chat.size();
@@ -104,12 +121,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ChatView
     public class ChatViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView showMessage;
         public ImageView profileImage,status;
+        public TextView seen;
         private ItemClickListener itemClickListener;
         public ChatViewHolder(@NonNull View itemView) {
             super(itemView);
             showMessage=(TextView)itemView.findViewById(R.id.showMessage);
             profileImage=(ImageView)itemView.findViewById(R.id.profileImage);
             status=(ImageView)itemView.findViewById(R.id.imgStatusChat);
+            seen=(TextView)itemView.findViewById(R.id.txtSeen);
             itemView.setOnClickListener(this);
         }
         public void setItemClickListener(ItemClickListener itemClickListener){

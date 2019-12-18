@@ -11,5 +11,5 @@ public interface ChatListener {
     void onError(String msg);
     void sendMsg(HashMap<String, Object> map);
     void onAccesstoUser(String tutorName);
-    void readMsg(ArrayList<Chat> chats);
+    void readMsg(ArrayList<Chat> chats,ArrayList<String>keys);
 }

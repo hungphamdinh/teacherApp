@@ -53,6 +53,7 @@ public class UserChat {
         hashMap.put("sender",sender);
         hashMap.put("reciever",reciever);
         hashMap.put("message",message);
+        hashMap.put("seen",false);
         reference.child("Chat").push().setValue(hashMap);
         final  String msg=message;
         reference=FirebaseDatabase.getInstance().getReference("Tutor").child(sender);
@@ -142,18 +143,21 @@ public class UserChat {
     }
     private void readMessage(final String myId, final String turId){
         ArrayList<Chat>chats=new ArrayList<>();
+        ArrayList<String>keys=new ArrayList<>();
         DatabaseReference chatRef;
         chatRef=FirebaseDatabase.getInstance().getReference("Chat");
         chatRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 chats.clear();
+                keys.clear();
                 for(DataSnapshot childSnap:dataSnapshot.getChildren()){
                     Chat chatItem=childSnap.getValue(Chat.class);
                     if(chatItem.getReciever().equals(myId)&&chatItem.getSender().equals(turId)
                             ||chatItem.getReciever().equals(turId)&&chatItem.getSender().equals(myId)){
                         chats.add(chatItem);
-                        chatListener.readMsg(chats);
+                        keys.add(childSnap.getKey());
+                        chatListener.readMsg(chats,keys);
                     }
                 }
             }

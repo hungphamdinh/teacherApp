@@ -44,7 +44,7 @@ public class ChatPresenter implements ChatListener {
     }
 
     @Override
-    public void readMsg(ArrayList<Chat> chats) {
-        userChatView.readMsg(chats);
+    public void readMsg(ArrayList<Chat> chats,ArrayList<String>keys) {
+        userChatView.readMsg(chats,keys);
     }
 }

@@ -34,6 +34,7 @@ public class MainChatActivity extends AppCompatActivity implements IUserChatView
     private ImageButton btnSubmit;
     private ArrayList<String> listChatID;
     private ChatPresenter chatPresenter;
+    private  LinearLayoutManager linearLayoutManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +43,7 @@ public class MainChatActivity extends AppCompatActivity implements IUserChatView
         txtName=(TextView)findViewById(R.id.txtNameChat);
         btnSubmit=(ImageButton) findViewById(R.id.btnSend);
         messagesView = (RecyclerView) findViewById(R.id.messages_view);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(MainChatActivity.this);
+       linearLayoutManager=new LinearLayoutManager(MainChatActivity.this);
         messagesView.setHasFixedSize(true);
         messagesView.setLayoutManager(linearLayoutManager);
 //        apiService= Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
@@ -84,17 +85,6 @@ public class MainChatActivity extends AppCompatActivity implements IUserChatView
         super.onStart();
 
     }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //chatPresenter.setStatus("online",userId);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //chatPresenter.setStatus("offline",userId);
-    }
 
     @Override
     public void onClickSendMsg(HashMap<String, Object> msgMap) {
@@ -107,13 +97,14 @@ public class MainChatActivity extends AppCompatActivity implements IUserChatView
     }
 
     @Override
-    public void readMsg(ArrayList<Chat> chats) {
+    public void readMsg(ArrayList<Chat> chats,ArrayList<String>keys) {
         HashMap<String,Object>idMap=new HashMap<>();
         idMap.put("userId",userId);
         idMap.put("studentId", studentId);
-        messageAdapter=new MessageAdapter(MainChatActivity.this,chats,idMap);
+        messageAdapter=new MessageAdapter(MainChatActivity.this,chats,idMap,keys);
         messageAdapter.notifyDataSetChanged();
         messagesView.setAdapter(messageAdapter);
+        messagesView.scrollToPosition(chats.size()-1);
     }
 
     @Override
