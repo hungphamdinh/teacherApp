@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public interface IMyCourseListListener {
     void onLoadStudentMyCourse(HashMap<String, Object> studentMap);
-    void onLoadCourseMyCourse(HashMap<String, Object> courseMap);
+    void onLoadCourseMyCourse(HashMap<String, Object> courseMap,int pos);
     void offlineStatus(String msg);
     void onlineStatus(String msg);
     void onNullItem(String msg);

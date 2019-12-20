@@ -35,10 +35,12 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
     private ArrayList<Course> course;
     private String userPhone;
     private MyCourseListPresenter myCourseListPresenter;
-    public StaffAdapter(Context context, ArrayList<Course> course,String userPhone) {
+    private ArrayList<String>keys;
+    public StaffAdapter(Context context, ArrayList<Course> course,String userPhone,ArrayList<String>keys) {
         this.context = context;
         this.course = course;
         this.userPhone=userPhone;
+        this.keys=keys;
     }
 
     public StaffAdapter() {
@@ -56,14 +58,15 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
     @Override
     public void onBindViewHolder(@NonNull StaffViewHolder holder, int position) {
         myCourseListPresenter=new MyCourseListPresenter(this,holder);
-        holder.txtCourseName.setText(course.get(position).getCourseName());
-        holder.txtSchedule.setText(course.get(position).getSchedule());
-        Glide.with(context.getApplicationContext())
-                .load(course.get(position).getImage())
-                .centerCrop()
-                // .placeholder(R.drawable.loading_spinner)
-                .into(holder.image);
-        myCourseListPresenter.setCourseList(position,userPhone);
+            holder.txtCourseName.setText(course.get(position).getCourseName());
+            holder.txtSchedule.setText(course.get(position).getSchedule());
+            Glide.with(context.getApplicationContext())
+                    .load(course.get(position).getImage())
+                    .centerCrop()
+                    // .placeholder(R.drawable.loading_spinner)
+                    .into(holder.image);
+            myCourseListPresenter.setCourseList(keys,position, userPhone,course);
+
     }
 
     @Override
@@ -86,7 +89,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
     }
 
     @Override
-    public void onDisplayCourse(HashMap<String, Object> map, StaffViewHolder holder) {
+    public void onDisplayCourse(HashMap<String, Object> map, StaffViewHolder holder,int pos) {
 
     }
 
@@ -107,7 +110,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
     @Override
     public void onNullItem(String msg, StaffViewHolder holder) {
         Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
-        holder.itemView.setVisibility(View.GONE);
+        holder.itemView.setVisibility(View.INVISIBLE);
     }
 
     @Override

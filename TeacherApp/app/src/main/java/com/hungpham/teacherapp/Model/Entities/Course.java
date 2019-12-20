@@ -6,6 +6,15 @@ public class Course {
     private String discount;
     private String price;
     private String image;
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getImage() {
         return image;

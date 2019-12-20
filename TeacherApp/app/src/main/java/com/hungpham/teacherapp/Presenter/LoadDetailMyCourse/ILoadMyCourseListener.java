@@ -16,4 +16,5 @@ public interface ILoadMyCourseListener {
     void onNullItem(String msg);
     void addTestSuccess(String msg);
     void addTestFailed(String msg);
+    void onLoadTitle(String title);
 }

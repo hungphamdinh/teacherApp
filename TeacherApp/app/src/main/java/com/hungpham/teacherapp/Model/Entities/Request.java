@@ -7,6 +7,15 @@ public class Request {
     public String name;
     public String phone;
     public String total;
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getCourseId() {
         return courseId;

@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hungpham.teacherapp.Model.Entities.Course;
 import com.hungpham.teacherapp.Model.Entities.Doc;
 import com.hungpham.teacherapp.Model.Entities.User;
 import com.hungpham.teacherapp.Notification.Token;
@@ -63,9 +64,25 @@ public class LoadMyCourse {
                         if (doc.getType().compareTo("tutorTest") != 0) {
                             docList.add(doc);
                             loadCourseListener.onLoadDocMyCourse(docList);
+                            loadTitle(courseId);
                         }
                     }
                 }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+    public void loadTitle(String courseId){
+        DatabaseReference courseRef=FirebaseDatabase.getInstance().getReference("Course");
+        courseRef.child(courseId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Course course=dataSnapshot.getValue(Course.class);
+                loadCourseListener.onLoadTitle(course.getCourseName());
             }
 
             @Override
@@ -86,7 +103,7 @@ public class LoadMyCourse {
                 for (DataSnapshot childSnap:dataSnapshot.getChildren()) {
 
                     Doc doc = childSnap.getValue(Doc.class);
-                    if(doc.getType().equals("tutorTest")) {
+                    if(doc.getType().equals("tutorTest")&&doc.getStatus()==1) {
                         docList.add(doc);
                         docKey.add(childSnap.getKey());
                         loadCourseListener.onLoadTutorTest(docList,docKey);
@@ -115,6 +132,7 @@ public class LoadMyCourse {
         dataMap.put("courseId",courseId);
         dataMap.put("docName",edtMap.get("docName"));
         dataMap.put("docUrl",edtMap.get("docUrl"));
+        dataMap.put("status",1);
         dataMap.put("type","tutorTest");
         if(edtMap.get("docName").equals("")||edtMap.get("docUrl").equals("")||!edtMap.get("docUrl").toString().trim().matches(formPatter)
                 ||!edtMap.get("docName").toString().trim().matches(formName)) {

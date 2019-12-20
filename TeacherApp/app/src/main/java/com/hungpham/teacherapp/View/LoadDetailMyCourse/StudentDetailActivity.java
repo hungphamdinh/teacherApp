@@ -162,7 +162,7 @@ public class StudentDetailActivity extends BaseActivity implements ILoadDetailMy
 
     @Override
     public void onDisplayStudent(HashMap<String, Object> map) {
-        txtTitle.setText(map.get("title").toString());
+       // txtTitle.setText(map.get("title").toString());
         txtUsername.setText(map.get("studentName").toString());
         txtEmail.setText(map.get("studentMail").toString());
         Glide.with(getApplicationContext())
@@ -222,6 +222,11 @@ public class StudentDetailActivity extends BaseActivity implements ILoadDetailMy
     @Override
     public void onAddTestFailed(String msg) {
         Toast.makeText(StudentDetailActivity.this,msg,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onLoadTitle(String title) {
+        txtTitle.setText(title);
     }
 
     private AlertDialog.Builder showUpdateDialog(HashMap<String,Object>edtMap) {

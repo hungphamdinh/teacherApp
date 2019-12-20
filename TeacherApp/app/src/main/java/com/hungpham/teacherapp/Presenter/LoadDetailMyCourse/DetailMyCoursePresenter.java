@@ -7,7 +7,7 @@ import com.hungpham.teacherapp.View.LoadDetailMyCourse.ILoadDetailMyCourseView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DetailMyCoursePresenter implements ILoadMyCourseListener,IDetailMyCoursePresenter {
+public class DetailMyCoursePresenter implements ILoadMyCourseListener {
     private ILoadDetailMyCourseView loadView;
     private LoadMyCourse mainInterator;
     public DetailMyCoursePresenter(ILoadDetailMyCourseView loadView){
@@ -74,6 +74,11 @@ public class DetailMyCoursePresenter implements ILoadMyCourseListener,IDetailMyC
     @Override
     public void addTestFailed(String msg) {
         loadView.onAddTestFailed(msg);
+    }
+
+    @Override
+    public void onLoadTitle(String title) {
+        loadView.onLoadTitle(title);
     }
 
 

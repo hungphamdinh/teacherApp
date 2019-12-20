@@ -17,13 +17,13 @@ public class MyCourseListPresenter implements IMyCourseListListener {
         this.courseView=courseView;
         this.holder=holder;
     }
-    public void setCourseList(int pos,String userId){
+    public void setCourseList(ArrayList<String>keys,int pos,String userId,ArrayList<Course>courses){
         //HashMap<String,Object>courseMap=new HashMap<>();
         HashMap<String,Object>tutorMap=new HashMap<>();
         HashMap<String,Object>posMap=new HashMap<>();
         posMap.put("pos",pos);
         posMap.put("userId",userId);
-        mainInterator.loadCourse(tutorMap,posMap);
+        mainInterator.loadCourse(posMap,courses,keys);
     }
 
 
@@ -34,8 +34,8 @@ public class MyCourseListPresenter implements IMyCourseListListener {
     }
 
     @Override
-    public void onLoadCourseMyCourse(HashMap<String, Object> courseMap) {
-        courseView.onDisplayCourse(courseMap,holder);
+    public void onLoadCourseMyCourse(HashMap<String, Object> courseMap,int pos) {
+        courseView.onDisplayCourse(courseMap,holder,pos);
     }
 
     @Override

@@ -5,6 +5,15 @@ public class Doc {
     private String docName;
     private String docUrl;
     private String type;
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getType() {
         return type;

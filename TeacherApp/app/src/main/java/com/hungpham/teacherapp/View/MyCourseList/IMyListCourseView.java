@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public interface IMyListCourseView {
     void onDisplayStudent(HashMap<String, Object> map, StaffAdapter.StaffViewHolder holder);
-    void onDisplayCourse(HashMap<String, Object> map, StaffAdapter.StaffViewHolder holder);
+    void onDisplayCourse(HashMap<String, Object> map, StaffAdapter.StaffViewHolder holder,int pos);
     void onDisplayOnline(String msg, StaffAdapter.StaffViewHolder holder);
     void onDisplayOffline(String msg, StaffAdapter.StaffViewHolder holder);
     void onNullItem(String msg, StaffAdapter.StaffViewHolder holder);

@@ -28,6 +28,7 @@ import com.hungpham.teacherapp.Model.Entities.Doc;
 import com.hungpham.teacherapp.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder>  {
@@ -51,7 +52,6 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull TestViewHolder holder, int position) {
-
         holder.txtDocName.setText(doc.get(position).getDocName());
 
         holder.setItemClickListener(new ItemClickListener() {
@@ -84,11 +84,13 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             Doc doc=dataSnapshot.getValue(Doc.class);
-                            if(doc==null){
+                            if(doc.getStatus()==0){
                                 holder.itemView.setVisibility(View.GONE);
                             }
                             else {
-                                docRef.child(key).removeValue();
+                                HashMap<String,Object>map=new HashMap<>();
+                                map.put("status",0);
+                                docRef.child(key).updateChildren(map);
                                 Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
                                 dialogInterface.dismiss();
                             }

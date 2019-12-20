@@ -20,12 +20,17 @@ public class MyCourseListCallAdapter {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<Course>courseList=new ArrayList<>();
+                ArrayList<String>keys=new ArrayList<>();
                 for(DataSnapshot childSnap:dataSnapshot.getChildren()){
                     Course courseCk=childSnap.getValue(Course.class);
-                    if(courseCk.getIsBuy().equals("true")){
+                    if(courseCk.getIsBuy().equals("true")&&courseCk.getStatus()==1){
                         courseList.add(courseCk);
-                        myCourseListAdaperListener.callAdapter(courseList);
+                        keys.add(childSnap.getKey());
+                        myCourseListAdaperListener.callAdapter(courseList,keys);
                     }
+//                    else {
+//                        myCourseListAdaperListener.onError("Lỗi khi tải khóa học");
+//                    }
 
                 }
             }

@@ -6,5 +6,6 @@ import com.hungpham.teacherapp.Model.Entities.Course;
 import java.util.ArrayList;
 
 public interface IMyCourseAdapterView {
-    void callAdapter(ArrayList<Course> courses);
+    void callAdapter(ArrayList<Course> courses,ArrayList<String>keys);
+    void ơnError(String msg);
 }

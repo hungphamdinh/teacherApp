@@ -16,4 +16,5 @@ public interface ILoadDetailMyCourseView {
     void onUpdateToken(String msg);
     void onAddTestSuccess(String msg);
     void onAddTestFailed(String msg);
+    void onLoadTitle(String title);
 }

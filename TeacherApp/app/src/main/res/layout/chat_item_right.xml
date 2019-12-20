@@ -61,6 +61,7 @@
             android:id="@+id/txtSeen"
             android:textSize="16dp"
             android:visibility="gone"
+            android:layout_marginLeft="10dp"
             android:textColor="#fff"
             android:layout_below="@id/showMessage"
             />

@@ -146,6 +146,7 @@ public class Home2Activity extends AppCompatActivity
             Intent signIn = new Intent(Home2Activity.this, LoginActivity2.class);
             signIn.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(signIn);
+            finish();
         } else if (id == R.id.nav_share) {
 
 
@@ -184,10 +185,14 @@ public class Home2Activity extends AppCompatActivity
         user.child(userPhone).updateChildren(map);
         //  user.child(phone).setValue(map);
     }
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 //        setStatus("offline");
-//
-//    }
+        final DatabaseReference user = FirebaseDatabase.getInstance().getReference("Tutor");
+        HashMap<String, Object> offMap = new HashMap<>();
+        offMap.put("status","offline");
+        user.child(userPhone).updateChildren(offMap);
+
+    }
 }
