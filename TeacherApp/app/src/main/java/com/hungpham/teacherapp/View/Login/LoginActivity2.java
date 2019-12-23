@@ -28,7 +28,6 @@ public class LoginActivity2 extends BaseActivity implements SinchService.StartFa
     private Button login;
     private TextView txtSignUp;
     private Cursor c=null;
-    private CheckBox ckbRemember;
     private ProgressDialog progressDialog;
     private ILoginPresenter loginPresenter;
     @Override
@@ -37,12 +36,10 @@ public class LoginActivity2 extends BaseActivity implements SinchService.StartFa
         setContentView(R.layout.activity_login2);
         username = (EditText)findViewById(R.id.edtPhoneLogin);
         password= (EditText)findViewById(R.id.edtPassword);
-        ckbRemember=(CheckBox) findViewById(R.id.ckbRememberUser);
         login= (Button)findViewById(R.id.btnLogin);
-        txtSignUp=(TextView)findViewById(R.id.txtSignUpNewAc);
         // setupUI(findViewById(R.id.parent));
-        SignUp();
-        Paper.init(this);
+     //   SignUp();
+//        Paper.init(this);
         loginPresenter=new LoginPresenter(this,this);
         onLogin();
     }
@@ -53,16 +50,6 @@ public class LoginActivity2 extends BaseActivity implements SinchService.StartFa
             public void onClick(View v) {
                 progressDialog=getProgressDialog();
                 loginPresenter.onLogin(username.getText().toString(),password.getText().toString());
-            }
-        });
-    }
-
-    private void SignUp() {
-        txtSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginActivity2.this, SignUpActivity.class));
-                // finish();
             }
         });
     }

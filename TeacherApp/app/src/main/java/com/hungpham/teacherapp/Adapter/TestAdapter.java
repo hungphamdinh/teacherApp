@@ -119,7 +119,7 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
     }
 
 
-    public class TestViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
+    public class TestViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView txtDocName,txtGoToCreate;
         private ImageView imgBtnDelete;
         private ItemClickListener itemClickListener;
@@ -129,7 +129,7 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
             txtDocName=(TextView)itemView.findViewById(R.id.txtTest);
             imgBtnDelete =(ImageView)itemView.findViewById(R.id.imgBtnDelete);
             itemView.setOnClickListener(this);
-            itemView.setOnCreateContextMenuListener(this);
+         //   itemView.setOnCreateContextMenuListener(this);
         }
 
         public void setItemClickListener(ItemClickListener itemClickListener){
@@ -141,13 +141,13 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
             itemClickListener.onClick(view,getAdapterPosition(),false);
         }
 
-        @Override
-        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-            contextMenu.setHeaderTitle("Select this action");
-            contextMenu.add(0,0,getAdapterPosition(), Common.UPDATE);
-            contextMenu.add(0,1,getAdapterPosition(), Common.DELETE);
-
-        }
+        //@Override
+//        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+//            contextMenu.setHeaderTitle("Select this action");
+//            contextMenu.add(0,0,getAdapterPosition(), Common.UPDATE);
+//            contextMenu.add(0,1,getAdapterPosition(), Common.DELETE);
+//
+//        }
 
     }
 

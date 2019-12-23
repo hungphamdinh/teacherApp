@@ -6,6 +6,9 @@ import android.os.Bundle;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -18,10 +21,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.hungpham.teacherapp.Adapter.SectionsPageAdapter;
 import com.hungpham.teacherapp.Common.Common;
 import com.hungpham.teacherapp.Fragment.HomeFragment;
 import com.hungpham.teacherapp.Fragment.Tab3Fragment;
+import com.hungpham.teacherapp.Model.Entities.Tutor;
 import com.hungpham.teacherapp.View.MyAccountView.MyAccountActivity;
 import com.hungpham.teacherapp.View.MyCourseList.MyCourseFragment;
 import com.google.android.material.navigation.NavigationView;
@@ -32,6 +40,7 @@ import com.hungpham.teacherapp.View.Login.LoginActivity2;
 
 import java.util.HashMap;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
 
 public class Home2Activity extends AppCompatActivity
@@ -41,7 +50,8 @@ public class Home2Activity extends AppCompatActivity
     private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
     private String userPhone = "";
-
+    private CircleImageView profile;
+    private TextView nav_user,nav_usermane;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,16 +63,17 @@ public class Home2Activity extends AppCompatActivity
         database = FirebaseDatabase.getInstance();
         //      firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         reference = database.getReference("Category");
-        Paper.init(this);
-
-
+        //Paper.init(this);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View hView =  navigationView.getHeaderView(0);
+        nav_user = (TextView)hView.findViewById(R.id.txtGmailProfile);
+        profile=(CircleImageView) hView.findViewById(R.id.imageViewProfile);
+        nav_usermane=(TextView)hView.findViewById(R.id.txtNameProfile);
         navigationView.setNavigationItemSelectedListener(this);
         if (Common.isConnectedToInternet(this)) {
             // loadMenu();
@@ -75,7 +86,6 @@ public class Home2Activity extends AppCompatActivity
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         setupViewPager(mViewPager);
-
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
         if (getIntent() != null)
@@ -85,12 +95,36 @@ public class Home2Activity extends AppCompatActivity
            //       setStatus("online");
                 setupViewPager(mViewPager);
                 setStatus();
+                setProfileInform();
+
             } else {
                 Toast.makeText(Home2Activity.this, "Check your connection", Toast.LENGTH_SHORT).show();
                 return;
             }
         }
         //setStatus("online");
+    }
+
+    private void setProfileInform() {
+        DatabaseReference tutorRef= FirebaseDatabase.getInstance().getReference("Tutor");
+        tutorRef.child(userPhone).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Tutor tutor=dataSnapshot.getValue(Tutor.class);
+                nav_user.setText(tutor.getEmail());
+                Glide.with(getApplicationContext())
+                        .load(tutor.getAvatar())
+                        .centerCrop()
+                        .into(profile);
+                nav_usermane.setText(tutor.getUsername());
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -147,12 +181,13 @@ public class Home2Activity extends AppCompatActivity
             signIn.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(signIn);
             finish();
-        } else if (id == R.id.nav_share) {
-
-
-        } else if (id == R.id.nav_send) {
-
         }
+//        else if (id == R.id.nav_share) {
+//
+//
+//        } else if (id == R.id.nav_send) {
+//
+//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

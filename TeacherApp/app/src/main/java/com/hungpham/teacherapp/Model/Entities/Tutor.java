@@ -1,12 +1,21 @@
 package com.hungpham.teacherapp.Model.Entities;
 
 public class Tutor {
-    String email;
-    String username;
-    String password;
-    String experience;
-    String status;
+    private String email;
+    private String username;
+    private String password;
+    private String experience;
+    private String status;
 
+    public int getCkWork() {
+        return ckWork;
+    }
+
+    public void setCkWork(int ckWork) {
+        this.ckWork = ckWork;
+    }
+
+    private int ckWork;
     public String getAvatar() {
         return avatar;
     }

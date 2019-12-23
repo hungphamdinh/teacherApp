@@ -60,7 +60,7 @@ public class DocAdapter extends RecyclerView.Adapter<DocAdapter.DocViewHolder>  
     }
 
 
-    public class DocViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
+    public class DocViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView txtDocName;
         private ItemClickListener itemClickListener;
 
@@ -68,7 +68,7 @@ public class DocAdapter extends RecyclerView.Adapter<DocAdapter.DocViewHolder>  
             super(itemView);
             txtDocName=(TextView)itemView.findViewById(R.id.txtCourseDocDetail);
             itemView.setOnClickListener(this);
-            itemView.setOnCreateContextMenuListener(this);
+   //         itemView.setOnCreateContextMenuListener(this);
         }
 
         public void setItemClickListener(ItemClickListener itemClickListener){
@@ -80,13 +80,13 @@ public class DocAdapter extends RecyclerView.Adapter<DocAdapter.DocViewHolder>  
             itemClickListener.onClick(view,getAdapterPosition(),false);
         }
 
-        @Override
-        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-            contextMenu.setHeaderTitle("Select this action");
-            contextMenu.add(0,0,getAdapterPosition(), Common.UPDATE);
-            contextMenu.add(0,1,getAdapterPosition(), Common.DELETE);
-
-        }
+//        @Override
+//        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+//            contextMenu.setHeaderTitle("Select this action");
+//            contextMenu.add(0,0,getAdapterPosition(), Common.UPDATE);
+//            contextMenu.add(0,1,getAdapterPosition(), Common.DELETE);
+//
+//        }
 
     }
 

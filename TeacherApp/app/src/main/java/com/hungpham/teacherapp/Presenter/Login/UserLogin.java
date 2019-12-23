@@ -24,21 +24,21 @@ public class UserLogin {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (phone.equals("") || password.equals("")) {
-                        userLoginListener.onLoginError("Please check your username and password");
+                        userLoginListener.onLoginError("Kiểm tra tên tài khoản và mật khẩu");
                     } else {
                         if (dataSnapshot.child(phone).exists()) {
                             Tutor uUser = dataSnapshot.child(phone).getValue(Tutor.class);
                             //uUser.set(phone);
                             //uUser.setUsername(uUser.getUsername());
-                            if (password.equals(uUser.getPassword())) {
+                            if (password.equals(uUser.getPassword())&&uUser.getCkWork()==1) {
                                 Common.currentUser = uUser;
-                                userLoginListener.onLoginSucess("Success");
+                                userLoginListener.onLoginSucess("Đăng nhập thành công");
                             } else {
-                                userLoginListener.onLoginError("WrongPass");
+                                userLoginListener.onLoginError("Vui lòng kiểm tra lại thông tin");
                             }
 
                         } else {
-                            userLoginListener.onLoginError("PhoneNotExist");
+                            userLoginListener.onLoginError("Số điện thoại không tồn tại");
                         }
                     }
                 }
@@ -50,7 +50,7 @@ public class UserLogin {
             });
         }
         else {
-            userLoginListener.onLoginError("Please check your connection");
+            userLoginListener.onLoginError("Vui lòng kiểm tra kết nối của bạn");
         }
     }
 

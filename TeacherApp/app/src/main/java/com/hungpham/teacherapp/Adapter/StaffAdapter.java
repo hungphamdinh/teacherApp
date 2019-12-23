@@ -125,7 +125,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
         });
     }
 
-    public class StaffViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
+    public class StaffViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView txtName, txtCourseName, txtStatus, txtEmail, txtSchedule;
         private ItemClickListener itemClickListener;
         private CircleImageView profileImage,imgStatus;
@@ -142,7 +142,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
             imgStatus=(CircleImageView) itemView.findViewById(R.id.imgStatusTutor);
             profileImage=(CircleImageView)itemView.findViewById(R.id.imgProfileMyCourse);
             itemView.setOnClickListener(this);
-            itemView.setOnCreateContextMenuListener(this);
+//            itemView.setOnCreateContextMenuListener(this);
         }
 
         public void setItemClickListener(ItemClickListener itemClickListener) {
@@ -154,13 +154,13 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
             itemClickListener.onClick(view, getAdapterPosition(), false);
         }
 
-        @Override
-        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-            contextMenu.setHeaderTitle("Select this action");
-            contextMenu.add(0, 0, getAdapterPosition(), Common.UPDATE);
-            contextMenu.add(0, 1, getAdapterPosition(), Common.DELETE);
-
-        }
+//        @Override
+//        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+//            contextMenu.setHeaderTitle("Select this action");
+//            contextMenu.add(0, 0, getAdapterPosition(), Common.UPDATE);
+//            contextMenu.add(0, 1, getAdapterPosition(), Common.DELETE);
+//
+//        }
 
     }
 }
